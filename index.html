@@ -1,0 +1,493 @@
+<!DOCTYPE html><html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>YATHARTH Tools</title>  <style>
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+      font-family:Arial, Helvetica, sans-serif;
+    }
+
+    body{
+      background:linear-gradient(135deg,#050816,#091428,#0f172a);
+      color:white;
+      overflow-x:hidden;
+    }
+
+    header{
+      width:100%;
+      padding:25px;
+      text-align:center;
+      background:rgba(255,255,255,0.05);
+      backdrop-filter:blur(10px);
+      position:sticky;
+      top:0;
+      z-index:100;
+      border-bottom:1px solid rgba(255,255,255,0.1);
+    }
+
+    header h1{
+      font-size:clamp(32px,8vw,48px);
+      background:linear-gradient(to right,#00f7ff,#00ff99,#ff00ff);
+      -webkit-background-clip:text;
+      -webkit-text-fill-color:transparent;
+      letter-spacing:4px;
+      text-shadow:0 0 20px rgba(0,255,255,0.4);
+    }
+
+    header p{
+      margin-top:10px;
+      color:#cbd5e1;
+      font-size:18px;
+    }
+
+    .hero{
+      min-height:50vh;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      text-align:center;
+      padding:40px;
+    }
+
+    .hero-box{
+      width:100%;
+      max-width:800px;
+      background:rgba(255,255,255,0.05);
+      padding:40px;
+      border-radius:30px;
+      backdrop-filter:blur(15px);
+      box-shadow:0 0 30px rgba(0,255,255,0.15);
+      animation:float 4s ease-in-out infinite;
+    }
+
+    .hero-box h2{
+      font-size:clamp(28px,7vw,42px);
+      margin-bottom:15px;
+      color:#00f7ff;
+    }
+
+    .hero-box p{
+      color:#d1d5db;
+      line-height:1.8;
+      font-size:18px;
+    }
+
+    @keyframes float{
+      0%{transform:translateY(0px);}
+      50%{transform:translateY(-10px);}
+      100%{transform:translateY(0px);}
+    }
+
+    .tools{
+      width:100%;
+      max-width:1200px;
+      margin:auto;
+      padding:40px 14px 80px;
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+      gap:25px;
+    }
+
+    @media(max-width:600px){
+      .hero{
+        padding:20px 12px;
+      }
+
+      .hero-box{
+        padding:25px 18px;
+        border-radius:22px;
+      }
+
+      .hero-box p{
+        font-size:15px;
+      }
+
+      .tool-card{
+        padding:18px;
+      }
+
+      button,input,textarea{
+        font-size:15px;
+      }
+    }
+
+    .tool-card{
+      background:rgba(255,255,255,0.05);
+      border:1px solid rgba(255,255,255,0.1);
+      border-radius:25px;
+      padding:25px;
+      transition:0.4s;
+      backdrop-filter:blur(10px);
+      position:relative;
+      overflow:hidden;
+    }
+
+    .tool-card::before{
+      content:"";
+      position:absolute;
+      width:200px;
+      height:200px;
+      background:rgba(0,255,255,0.08);
+      border-radius:50%;
+      top:-100px;
+      right:-100px;
+    }
+
+    .tool-card:hover{
+      transform:translateY(-10px) scale(1.02);
+      box-shadow:0 0 25px rgba(0,255,255,0.3);
+    }
+
+    .tool-card h3{
+      color:#00f7ff;
+      margin-bottom:15px;
+      font-size:26px;
+    }
+
+    input, textarea{
+      width:100%;
+      padding:14px;
+      margin:10px 0;
+      border:none;
+      outline:none;
+      border-radius:12px;
+      background:#0f172a;
+      color:white;
+      font-size:16px;
+    }
+
+    button{
+      width:100%;
+      padding:14px;
+      margin-top:10px;
+      border:none;
+      border-radius:12px;
+      background:linear-gradient(to right,#00f7ff,#00ff99);
+      color:black;
+      font-weight:bold;
+      cursor:pointer;
+      transition:0.3s;
+      font-size:16px;
+    }
+
+    button:hover{
+      transform:scale(1.03);
+      box-shadow:0 0 20px rgba(0,255,255,0.5);
+    }
+
+    .output{
+      margin-top:15px;
+      padding:15px;
+      border-radius:12px;
+      background:#020617;
+      color:#00ff99;
+      min-height:50px;
+      word-wrap:break-word;
+    }
+
+    footer{
+      text-align:center;
+      padding:25px;
+      border-top:1px solid rgba(255,255,255,0.1);
+      color:#94a3b8;
+      background:rgba(255,255,255,0.03);
+    }
+
+    .clock{
+      font-size:42px;
+      text-align:center;
+      color:#00ff99;
+      margin-top:15px;
+      font-weight:bold;
+    }
+
+    .quote{
+      font-size:20px;
+      line-height:1.7;
+      color:#f8fafc;
+      margin-top:20px;
+      text-align:center;
+    }
+
+  </style></head>
+<body><header>
+  <h1>YATHARTH Tools</h1>
+  <p>Ultimate Stylish Multi Tool Website</p>
+</header><section class="hero">
+  <div class="hero-box">
+    <h2>Future Style Utility Website</h2>
+    <p>
+      Stylish glassmorphism design, cool animations, glowing buttons,
+      live tools, calculators and smart utilities — all inside one website.
+    </p>
+  </div>
+</section><section style="text-align:center;padding:20px;">
+  <button onclick="openGamePage()" style="max-width:320px;">
+    Open Hacker Shooting Game
+  </button>
+</section><section id="gamePage" style="display:none;position:fixed;top:0;left:0;width:100%;height:100vh;background:black;overflow:hidden;z-index:9999;">  <button onclick="closeGamePage()" style="position:absolute;top:20px;left:20px;z-index:10;width:160px;">
+    Back To Tools
+  </button>  <div style="position:absolute;top:20px;right:20px;color:#00ff99;font-family:Arial;z-index:10;font-size:22px;">
+    Hacker Shooting Game
+  </div><canvas id="gameCanvas" style="width:100%;height:100%;display:block;"></canvas>
+
+</section><section class="tools">  <div class="tool-card">
+    <h3>Age Calculator</h3>
+    <input type="date" id="dob">
+    <button onclick="calculateAge()">Calculate Age</button>
+    <div class="output" id="ageOutput"></div>
+  </div>  <div class="tool-card">
+    <h3>Random Password Generator</h3>
+    <input type="number" id="passLength" placeholder="Password Length">
+    <button onclick="generatePassword()">Generate Password</button>
+    <div class="output" id="passwordOutput"></div>
+  </div>  <div class="tool-card">
+    <h3>Live Digital Clock</h3>
+    <div class="clock" id="clock"></div>
+  </div>  <div class="tool-card">
+    <h3>Text Counter</h3>
+    <textarea id="textInput" rows="5" placeholder="Type something..."></textarea>
+    <button onclick="countText()">Count</button>
+    <div class="output" id="textOutput"></div>
+  </div>  <div class="tool-card">
+    <h3>Calculator</h3>
+    <input type="number" id="num1" placeholder="First Number">
+    <input type="number" id="num2" placeholder="Second Number">
+    <button onclick="addNumbers()">Add Numbers</button>
+    <div class="output" id="calcOutput"></div>
+  </div>  <div class="tool-card">
+    <h3>Random Motivational Quote</h3>
+    <button onclick="showQuote()">Show Quote</button>
+    <div class="quote" id="quoteOutput"></div>
+  </div></section><footer>
+  © 2026 YATHARTH Tools | Designed By Yatharth
+</footer><script>
+
+  function calculateAge(){
+    let dob = document.getElementById('dob').value;
+    let birthDate = new Date(dob);
+    let today = new Date();
+
+    let age = today.getFullYear() - birthDate.getFullYear();
+    let month = today.getMonth() - birthDate.getMonth();
+
+    if(month < 0 || (month === 0 && today.getDate() < birthDate.getDate())){
+      age--;
+    }
+
+    document.getElementById('ageOutput').innerHTML =
+      "Your Age is <b>" + age + "</b> years";
+  }
+
+
+  function generatePassword(){
+    let length = document.getElementById('passLength').value;
+    let chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789@#$%^&*!";
+    let password = "";
+
+    for(let i=0;i<length;i++){
+      password += chars.charAt(Math.floor(Math.random()*chars.length));
+    }
+
+    document.getElementById('passwordOutput').innerHTML = password;
+  }
+
+
+  function updateClock(){
+    let now = new Date();
+    let time = now.toLocaleTimeString();
+    document.getElementById('clock').innerHTML = time;
+  }
+
+  setInterval(updateClock,1000);
+  updateClock();
+
+
+  function countText(){
+    let text = document.getElementById('textInput').value;
+
+    let chars = text.length;
+    let words = text.trim().split(/\s+/).filter(word => word !== '').length;
+
+    document.getElementById('textOutput').innerHTML =
+      "Words: <b>" + words + "</b><br>Characters: <b>" + chars + "</b>";
+  }
+
+
+  function addNumbers(){
+    let num1 = Number(document.getElementById('num1').value);
+    let num2 = Number(document.getElementById('num2').value);
+
+    let result = num1 + num2;
+
+    document.getElementById('calcOutput').innerHTML =
+      "Result = <b>" + result + "</b>";
+  }
+
+
+  function showQuote(){
+
+    let quotes = [
+      "Dream big and dare to fail.",
+      "Success starts with discipline.",
+      "Coding turns ideas into reality.",
+      "Stay focused and never quit.",
+      "Small progress is still progress.",
+      "Great developers never stop learning."
+    ];
+
+    let randomQuote = quotes[Math.floor(Math.random()*quotes.length)];
+
+    document.getElementById('quoteOutput').innerHTML = randomQuote;
+  }
+
+
+
+  const gamePage = document.getElementById('gamePage');
+const canvas = document.getElementById('gameCanvas');
+const ctx = canvas.getContext('2d');
+
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+window.addEventListener('resize', ()=>{
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+});
+
+let player = {
+    x: canvas.width/2,
+    y: canvas.height-100,
+    size: 20
+};
+
+let bullets = [];
+let enemies = [];
+let score = 0;
+
+function spawnEnemy(){
+
+    enemies.push({
+        x: Math.random() * canvas.width,
+        y: -20,
+        size: 20,
+        speed: 2 + Math.random()*3
+    });
+}
+
+setInterval(spawnEnemy,700);
+
+canvas.addEventListener('mousemove',(e)=>{
+    player.x = e.clientX;
+});
+
+canvas.addEventListener('touchmove',(e)=>{
+    e.preventDefault();
+    player.x = e.touches[0].clientX;
+});
+
+function shoot(){
+
+    bullets.push({
+        x: player.x,
+        y: player.y,
+        size: 6,
+        speed: 9
+    });
+}
+
+canvas.addEventListener('click',shoot);
+canvas.addEventListener('touchstart',shoot);
+
+function drawPlayer(){
+
+    ctx.beginPath();
+    ctx.strokeStyle = '#00ff99';
+    ctx.lineWidth = 3;
+
+    ctx.moveTo(player.x, player.y - 25);
+    ctx.lineTo(player.x - 20, player.y + 20);
+    ctx.lineTo(player.x + 20, player.y + 20);
+    ctx.closePath();
+
+    ctx.stroke();
+}
+
+function animateGame(){
+
+    if(gamePage.style.display === 'none'){
+        requestAnimationFrame(animateGame);
+        return;
+    }
+
+    ctx.fillStyle = 'rgba(0,0,0,0.35)';
+    ctx.fillRect(0,0,canvas.width,canvas.height);
+
+    drawPlayer();
+
+    bullets.forEach((bullet,bi)=>{
+
+        bullet.y -= bullet.speed;
+
+        ctx.beginPath();
+        ctx.fillStyle = '#00ff99';
+        ctx.arc(bullet.x,bullet.y,bullet.size,0,Math.PI*2);
+        ctx.fill();
+
+        if(bullet.y < 0){
+            bullets.splice(bi,1);
+        }
+    });
+
+    enemies.forEach((enemy,ei)=>{
+
+        enemy.y += enemy.speed;
+
+        ctx.beginPath();
+        ctx.strokeStyle = '#00ff99';
+        ctx.lineWidth = 2;
+        ctx.rect(enemy.x,enemy.y,enemy.size,enemy.size);
+        ctx.stroke();
+
+        bullets.forEach((bullet,bi)=>{
+
+            let dx = bullet.x - enemy.x;
+            let dy = bullet.y - enemy.y;
+            let dist = Math.sqrt(dx*dx + dy*dy);
+
+            if(dist < 20){
+                enemies.splice(ei,1);
+                bullets.splice(bi,1);
+                score++;
+            }
+        });
+
+        if(enemy.y > canvas.height){
+            enemies.splice(ei,1);
+        }
+    });
+
+    ctx.fillStyle = '#00ff99';
+    ctx.font = '28px Arial';
+    ctx.fillText('Score: ' + score,30,50);
+
+    requestAnimationFrame(animateGame);
+}
+
+animateGame();
+
+function openGamePage(){
+    gamePage.style.display = 'block';
+    document.body.style.overflow = 'hidden';
+}
+
+function closeGamePage(){
+    gamePage.style.display = 'none';
+    document.body.style.overflow = 'auto';
+}
+
+</script></body>
+</html>
