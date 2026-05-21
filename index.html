@@ -304,9 +304,25 @@ content="Yatharth Tools, games, tools, animations, online tools" />
     <h3>Random Motivational Quote</h3>
     <button onclick="showQuote()">Show Quote</button>
     <div class="quote" id="quoteOutput"></div>
-  </div></section><footer>
+  </div></section>
+  <div class="tool-card">
+  <h3>Image To PDF</h3>
+
+  <input type="file" id="imageInput" accept="image/*">
+
+  <button onclick="convertToPDF()">
+    Convert To PDF
+  </button>
+
+  <div class="output" id="pdfOutput">
+    Select image and download PDF
+  </div>
+  </div><footer>
   © 2026 YATHARTH Tools | Designed By Yatharth
-</footer><script>
+</footer>
+  <script src="https://unpkg.com/pdf-lib/dist/pdf-lib.min.js"></script>
+  
+  <script>
   function calculateAge(){
     let dob = document.getElementById('dob').value;
     let birthDate = new Date(dob);
@@ -507,6 +523,56 @@ content="Yatharth Tools, games, tools, animations, online tools" />
   }
 
   animate(); 
+    async function convertToPDF(){
+
+  const file = document.getElementById("imageInput").files[0];
+
+  if(!file){
+    document.getElementById("pdfOutput").innerHTML =
+      "Please select an image";
+    return;
+  }
+
+  const imgData = await file.arrayBuffer();
+
+  const { PDFDocument } = PDFLib;
+
+  const pdfDoc = await PDFDocument.create();
+
+  let image;
+
+  if(file.type === "image/png"){
+    image = await pdfDoc.embedPng(imgData);
+  }else{
+    image = await pdfDoc.embedJpg(imgData);
+  }
+
+  const page = pdfDoc.addPage([image.width,image.height]);
+
+  page.drawImage(image,{
+    x:0,
+    y:0,
+    width:image.width,
+    height:image.height
+  });
+
+  const pdfBytes = await pdfDoc.save();
+
+  const blob = new Blob([pdfBytes],{
+    type:"application/pdf"
+  });
+
+  const link = document.createElement("a");
+
+  link.href = URL.createObjectURL(blob);
+
+  link.download = "image.pdf";
+
+  link.click();
+
+  document.getElementById("pdfOutput").innerHTML =
+    "PDF Downloaded Successfully";
+    }
   
 </script>
 
