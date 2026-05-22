@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Matrix Rain - YATHARTH Tools</title>
+
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:Arial, sans-serif;
+}
+
+body{
+  overflow-x:hidden;
+  overflow-y:auto;
+  background:black;
+  color:#00ff66;
+}
+
+canvas{
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  z-index:-1;
+}
+
+.container{
+  min-height:100vh;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  padding:20px;
+}
+
+h1{
+  font-size:45px;
+  margin-bottom:10px;
+  text-shadow:0 0 15px #00ff66;
+}
+
+.typing{
+  font-size:18px;
+  margin-bottom:30px;
+  border-right:2px solid #00ff66;
+  white-space:nowrap;
+  overflow:hidden;
+  width:0;
+  animation:typing 4s steps(35,end) forwards, blink .8s infinite;
+}
+
+@keyframes typing{
+  from{width:0}
+  to{width:320px}
+}
+
+@keyframes blink{
+  50%{border-color:transparent}
+}
+
+.generator-box{
+  width:100%;
+  max-width:700px;
+  background:rgba(0,0,0,0.7);
+  border:2px solid #00ff66;
+  border-radius:15px;
+  padding:20px;
+  box-shadow:0 0 20px #00ff66;
+}
+
+textarea{
+  width:100%;
+  height:120px;
+  background:black;
+  color:#00ff66;
+  border:1px solid #00ff66;
+  border-radius:10px;
+  padding:15px;
+  resize:none;
+  font-size:15px;
+}
+
+button{
+  margin-top:15px;
+  padding:12px 25px;
+  background:#00ff66;
+  color:black;
+  border:none;
+  border-radius:10px;
+  font-size:16px;
+  font-weight:bold;
+  cursor:pointer;
+  transition:0.3s;
+}
+
+button:hover{
+  transform:scale(1.05);
+  box-shadow:0 0 15px #00ff66;
+}
+
+.output{
+  margin-top:20px;
+  background:black;
+  border:1px solid #00ff66;
+  border-radius:10px;
+  padding:15px;
+  text-align:left;
+  white-space:pre-wrap;
+  min-height:120px;
+  max-height:70vh;
+  overflow-y:auto;
+  overflow-x:hidden;
+  word-break:break-word;
+  font-size:14px;
+}
+
+.music-btn{
+  position:fixed;
+  top:20px;
+  right:20px;
+  z-index:10;
+}
+
+.loading{
+  position:fixed;
+  inset:0;
+  background:black;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:30px;
+  color:#00ff66;
+  z-index:999;
+  animation:hideLoader 3s forwards;
+}
+
+@keyframes hideLoader{
+  0%,90%{opacity:1}
+  100%{opacity:0;visibility:hidden}
+}
+
+@media(max-width:600px){
+  h1{
+    font-size:32px;
+  }
+
+  .typing{
+    font-size:14px;
+  }
+}
+</style>
+</head>
+<body>
+
+<div class="loading">
+ACCESSING MATRIX...
+</div>
+
+<canvas id="matrix"></canvas>
+
+<div class="container">
+  <h1>MATRIX RAIN</h1>
+
+  <div class="typing">
+  <b>Welcome To YATHARTH Hack...</b>
+  </div>
+
+  <div class="generator-box">
+    <h2 style="margin-bottom:15px;">Coding Generator</h2>
+
+    <textarea id="input" placeholder="Type your idea... Example: login page"></textarea>
+
+    <button onclick="generateCode()">GENERATE</button>
+
+    <div class="output" id="output">
+Your generated code will appear here...
+    </div>
+  </div>
+</div>
+
+<button class="music-btn" onclick="playMusic()">🔊 MUSIC</button>
+
+<audio id="bgmusic" loop>
+  <source src="https://files.catbox.moe/6nq6qv.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+const canvas = document.getElementById('matrix');
+const ctx = canvas.getContext('2d');
+
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+const letters = '01ABCDEFGHIJKLMNOPQRSTUVWXYZ#$%&';
+const fontSize = 16;
+const columns = canvas.width / fontSize;
+
+const drops = [];
+for(let i=0;i<columns;i++){
+  drops[i]=1;
+}
+
+function draw(){
+  ctx.fillStyle='rgba(0,0,0,0.05)';
+  ctx.fillRect(0,0,canvas.width,canvas.height);
+
+  ctx.fillStyle='#00ff66';
+  ctx.font=fontSize+'px monospace';
+
+  for(let i=0;i<drops.length;i++){
+    const text=letters[Math.floor(Math.random()*letters.length)];
+
+    ctx.fillText(text,i*fontSize,drops[i]*fontSize);
+
+    if(drops[i]*fontSize>canvas.height && Math.random()>0.975){
+      drops[i]=0;
+    }
+
+    drops[i]++;
+  }
+}
+
+setInterval(draw,35);
+
+window.addEventListener('resize',()=>{
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+});
+
+function generateCode(){
+  const output = document.getElementById('output');
+
+  const words = [
+    'matrix','override','system','kernel','cyber','neural','protocol',
+    'encrypt','decode','binary','signal','root','access','ghost',
+    'scanner','network','inject','payload','terminal','security',
+    'server','compile','quantum','tracking','firewall'
+  ];
+
+  const actions = [
+    'initialize','execute','render','activate','decrypt',
+    'generate','connect','compile','inject','override',
+    'scan','track','upload','boot','sync'
+  ];
+
+  let fakeCode = '';
+
+  fakeCode += '// YATHARTH MATRIX SYSTEM\n';
+  fakeCode += '// ACCESS GRANTED\n';
+  fakeCode += '// STATUS: CONNECTED\n\n';
+
+  for(let i=0;i<150;i++){
+    const action = actions[Math.floor(Math.random()*actions.length)];
+    const word1 = words[Math.floor(Math.random()*words.length)];
+    const word2 = words[Math.floor(Math.random()*words.length)];
+    const num = Math.floor(Math.random()*99999);
+
+    const lineTypes = [
+      `${action}${word1}(${num});`,
+      `const ${word1}${num} = ${action}System();`,
+      `${word1}.${action}('${word2}_${num}');`,
+      `if(${word1}${num} > ${num}) { overrideProtocol(); }`,
+      `while(system.${word2}) { decryptKernel(); }`,
+      `function ${action}${word2}(){ return '${word1}'; }`,
+      `${word1}_${word2}_${num} = true;`,
+      `matrix.${action}('${word1}_${num}');`
+    ];
+
+    fakeCode += lineTypes[Math.floor(Math.random()*lineTypes.length)] + '\n';
+  }
+
+  fakeCode += '\n// MATRIX EXECUTION COMPLETE';
+
+  output.textContent = fakeCode;
+}
+
+function playMusic(){
+  const music = document.getElementById('bgmusic');
+  music.volume = 1;
+  music.play();
+}
+</script>
+
+</body>
+</html>
