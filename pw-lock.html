@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Y Secure Access</title>
+
+<style>
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
+
+body{
+  overflow:hidden;
+  background:black;
+  font-family:monospace;
+}
+
+/* MATRIX BG */
+canvas{
+  position:fixed;
+  top:0;
+  left:0;
+  z-index:0;
+}
+
+/* START SCREEN */
+#intro{
+  position:absolute;
+  width:100%;
+  height:100%;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  z-index:5;
+  transition:1.5s;
+}
+
+/* BIG Y */
+#logoY{
+  position:absolute;
+  font-size:140px;
+  color:#00ff99;
+  font-weight:bold;
+  text-shadow:
+  0 0 20px #00ff99,
+  0 0 40px #00ff99,
+  0 0 80px #00ff99;
+  animation:
+  pulse 2s infinite alternate,
+  flicker 3s infinite;
+}
+
+/* MAGIC RINGS */
+.ring{
+  position:absolute;
+  border-radius:50%;
+  border:1px solid rgba(0,255,153,0.25);
+  animation:spin linear infinite;
+  box-shadow:0 0 25px #00ff99;
+}
+
+.r1{
+  width:240px;
+  height:240px;
+  animation-duration:6s;
+}
+
+.r2{
+  width:320px;
+  height:320px;
+  border-style:dashed;
+  animation-duration:10s;
+  animation-direction:reverse;
+}
+
+.r3{
+  width:420px;
+  height:420px;
+  border-style:dotted;
+  animation-duration:16s;
+}
+
+/* LOGIN BOX */
+#box{
+  position:absolute;
+  top:50%;
+  left:50%;
+  transform:
+  translate(-50%,-50%)
+  scale(0.4);
+
+  opacity:0;
+
+  width:340px;
+
+  background:
+  rgba(0,0,0,0.55);
+
+  border:
+  1px solid rgba(0,255,153,0.4);
+
+  backdrop-filter:blur(10px);
+
+  padding:35px;
+
+  border-radius:22px;
+
+  text-align:center;
+
+  z-index:10;
+
+  transition:1.2s;
+
+  box-shadow:
+  0 0 30px rgba(0,255,153,0.25);
+}
+
+#box.show{
+  opacity:1;
+
+  transform:
+  translate(-50%,-50%)
+  scale(1);
+}
+
+#box h2{
+  color:#00ff99;
+  margin-bottom:20px;
+  font-size:28px;
+  text-shadow:0 0 15px #00ff99;
+}
+
+/* INPUT */
+input{
+  width:100%;
+  padding:14px;
+
+  border:none;
+
+  border-radius:14px;
+
+  background:
+  rgba(255,255,255,0.08);
+
+  color:white;
+
+  outline:none;
+
+  font-size:16px;
+
+  margin-top:10px;
+
+  box-shadow:
+  inset 0 0 10px rgba(0,255,153,0.25);
+}
+
+/* BUTTON */
+button{
+  width:100%;
+
+  margin-top:18px;
+
+  padding:14px;
+
+  border:none;
+
+  border-radius:14px;
+
+  background:#00ff99;
+
+  color:black;
+
+  font-weight:bold;
+
+  font-size:16px;
+
+  cursor:pointer;
+
+  transition:0.4s;
+}
+
+button:hover{
+  transform:scale(1.05);
+
+  box-shadow:
+  0 0 25px #00ff99;
+}
+
+/* MESSAGE */
+#msg{
+  color:#00ff99;
+
+  margin-top:16px;
+
+  font-size:14px;
+
+  line-height:1.6;
+
+  text-shadow:
+  0 0 12px #00ff99;
+}
+
+#msg a{
+  color:white;
+
+  text-decoration:none;
+
+  border-bottom:
+  1px solid #00ff99;
+}
+
+/* ANIMATIONS */
+@keyframes pulse{
+  from{
+    transform:scale(1);
+  }
+
+  to{
+    transform:scale(1.18);
+  }
+}
+
+@keyframes spin{
+  from{
+    transform:rotate(0deg);
+  }
+
+  to{
+    transform:rotate(360deg);
+  }
+}
+
+@keyframes flicker{
+  0%{opacity:1;}
+  50%{opacity:0.85;}
+  100%{opacity:1;}
+}
+
+</style>
+</head>
+
+<body>
+
+<canvas id="matrix"></canvas>
+
+<!-- INTRO -->
+<div id="intro">
+
+  <div class="ring r1"></div>
+  <div class="ring r2"></div>
+  <div class="ring r3"></div>
+
+  <div id="logoY">Y</div>
+
+</div>
+
+<!-- LOGIN -->
+<div id="box">
+
+  <h2>SECURE ACCESS</h2>
+
+  <input
+  type="password"
+  id="pass"
+  placeholder="Enter Password">
+
+  <button onclick="unlock()">
+  UNLOCK
+  </button>
+
+  <div id="msg">
+
+    🔑 For Password Message Me On
+
+    <br><br>
+
+    <a href="https://instagram.com/yatharth_uv"
+    target="_blank">
+
+    Instagram
+
+    </a>
+      </a>
+
+  &nbsp; | &nbsp;
+
+  <a href="https://t.me/Yatharth_uv"
+  target="_blank">
+
+  Telegram
+
+  </a>
+
+</div>
+  </div>
+
+</div>
+
+<script>
+
+/* MATRIX BG */
+
+const canvas =
+document.getElementById("matrix");
+
+const ctx =
+canvas.getContext("2d");
+
+canvas.width =
+window.innerWidth;
+
+canvas.height =
+window.innerHeight;
+
+const letters =
+"アァカサタナハマヤャラワ0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+
+const fontSize = 16;
+
+const columns =
+canvas.width/fontSize;
+
+const drops=[];
+
+for(let i=0;i<columns;i++){
+  drops[i]=1;
+}
+
+/* MAGIC MATRIX CHAIN */
+
+let angle=0;
+
+function draw(){
+
+  ctx.fillStyle=
+  "rgba(0,0,0,0.08)";
+
+  ctx.fillRect(
+  0,
+  0,
+  canvas.width,
+  canvas.height
+  );
+
+  ctx.fillStyle="#00ff99";
+
+  ctx.font=
+  fontSize+"px monospace";
+
+  /* RAIN */
+
+  for(let i=0;i<drops.length;i++){
+
+    const text =
+    letters[Math.floor(
+    Math.random()*letters.length
+    )];
+
+    ctx.fillText(
+    text,
+    i*fontSize,
+    drops[i]*fontSize
+    );
+
+    if(
+    drops[i]*fontSize>
+    canvas.height &&
+    Math.random()>0.975
+    ){
+      drops[i]=0;
+    }
+
+    drops[i]++;
+  }
+
+  /* MATRIX WORD CHAIN RINGS */
+
+  const cx =
+  canvas.width/2;
+
+  const cy =
+  canvas.height/2;
+
+  for(let r=140;r<=240;r+=45){
+
+    for(let i=0;i<100;i++){
+
+      const a =
+      angle + i*0.12;
+
+      const x =
+      cx + Math.cos(a)*r;
+
+      const y =
+      cy + Math.sin(a)*r;
+
+      const char =
+      letters[
+      Math.floor(
+      Math.random()*letters.length
+      )
+      ];
+
+      ctx.fillText(char,x,y);
+
+    }
+
+  }
+
+  angle += 0.015;
+
+}
+
+setInterval(draw,30);
+
+/* INTRO FLOW */
+
+setTimeout(()=>{
+
+  document
+  .getElementById("intro")
+  .style.opacity="0";
+
+  setTimeout(()=>{
+
+    document
+    .getElementById("intro")
+    .style.display="none";
+
+    document
+    .getElementById("box")
+    .classList.add("show");
+
+  },1500);
+
+},3000);
+
+/* PASSWORD */
+
+function unlock(){
+
+  const p =
+  document.getElementById("pass").value;
+
+  if(p==="24Y2009"){
+
+    document
+    .getElementById("box")
+    .style.transform=
+    "translate(-50%,-50%) scale(0) rotate(10deg)";
+
+    document
+    .getElementById("box")
+    .style.opacity="0";
+
+    setTimeout(()=>{
+
+      window.location.href=
+      "https://pwthor.live/";
+
+    },800);
+
+  }else{
+
+    alert("Wrong Password");
+
+  }
+
+}
+
+</script>
+
+</body>
+</html>
