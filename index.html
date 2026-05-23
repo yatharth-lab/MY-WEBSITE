@@ -1,12 +1,12 @@
 <!DOCTYPE html><html lang="en">
 <head>
-  <title>YATHARTH Tools - Games & Tools</title>
+  <title>YATHARTH Tools - Animation & Tools</title>
 
 <meta name="description"
-content="YATHARTH Tools website with games, animations and useful online tools." />
+content="YATHARTH Tools website , animations and useful online tools." />
 
 <meta name="keywords"
-content="Yatharth Tools, games, tools, animations, online tools" />
+content="Yatharth Tools, tools, animations, online tools" />
 
 <meta name="author" content="Yatharth Gupta" />
 
@@ -244,9 +244,7 @@ content="Yatharth Tools, games, tools, animations, online tools" />
   </div>
  
 </section><section style="text-align:center;padding:20px;">
-  <button onclick="openGamePage()" style="max-width:320px;">
-    Open Hacker Shooting Game
-  </button> 
+  
   <div class="tool-card">
   <h3>Free Batches</h3>
   <p>Click below to open PW website</p>
@@ -271,15 +269,8 @@ content="Yatharth Tools, games, tools, animations, online tools" />
     </section>
     
 </div>
-</section><section id="gamePage" style="display:none;position:fixed;top:0;left:0;width:100%;height:100vh;background:black;overflow:hidden;z-index:9999;">  <button onclick="closeGamePage()" style="position:absolute;top:20px;left:20px;z-index:10;width:160px;">
-    Back To Tools
-  </button>  <div style="position:absolute;top:20px;right:20px;color:#00ff99;font-family:Arial;z-index:10;font-size:22px;">
-    Hacker Shooting Game
-  </div><canvas id="gameCanvas" style="width:100%;height:100%;display:block;"></canvas>
-
-
-  
-</section><section class="tools">  <div class="tool-card">
+</section>
+  <section class="tools">  <div class="tool-card">
     <h3>Age Calculator</h3>
     <input type="date" id="dob">
     <button onclick="calculateAge()">Calculate Age</button>
@@ -416,133 +407,6 @@ content="Yatharth Tools, games, tools, animations, online tools" />
 
 
 
-  // ===== GAME CODE =====
-
-  const gamePage = document.getElementById("gamePage");
-  const canvas = document.getElementById("gameCanvas");
-  const ctx = canvas.getContext("2d");
-
-  let cw, ch;
-
-  function resizeCanvas(){
-    cw = canvas.width = window.innerWidth;
-    ch = canvas.height = window.innerHeight;
-  }
-
-  resizeCanvas();
-  window.addEventListener("resize", resizeCanvas);
-
-  function openGamePage(){
-    gamePage.style.display = "block";
-  }
-
-  function closeGamePage(){
-    gamePage.style.display = "none";
-  }
-
-  let player = {
-    x: window.innerWidth / 2,
-    y: window.innerHeight - 100,
-    size: 25
-  };
-
-  let bullets = [];
-  let enemies = [];
-
-  function spawnEnemy(){
-    enemies.push({
-      x: Math.random() * cw,
-      y: -20,
-      size: 20,
-      speed: 2 + Math.random() * 3
-    });
-  }
-
-  setInterval(spawnEnemy,1000);
-
-  function shoot(x,y){
-    bullets.push({
-      x:x,
-      y:y,
-      size:6,
-      speed:8
-    });
-  }
-
-  canvas.addEventListener("touchmove",(e)=>{
-    player.x = e.touches[0].clientX;
-    player.y = e.touches[0].clientY;
-  });
-
-  canvas.addEventListener("touchstart",()=>{
-    shoot(player.x,player.y);
-  });
-
-  canvas.addEventListener("mousemove",(e)=>{
-    player.x = e.clientX;
-    player.y = e.clientY;
-  });
-
-  canvas.addEventListener("click",()=>{
-    shoot(player.x,player.y);
-  });
-
-  function drawPlayer(){
-    ctx.beginPath();
-    ctx.fillStyle = "#00ff99";
-    ctx.arc(player.x,player.y,player.size,0,Math.PI*2);
-    ctx.fill();
-  }
-
-  function drawBullets(){
-    bullets.forEach((b,i)=>{
-      b.y -= b.speed;
-
-      ctx.fillStyle = "#00f7ff";
-      ctx.fillRect(b.x-2,b.y,4,15);
-
-      if(b.y < 0){
-        bullets.splice(i,1);
-      }
-    });
-  }
-
-  function drawEnemies(){
-    enemies.forEach((e,ei)=>{
-      e.y += e.speed;
-
-      ctx.beginPath();
-      ctx.fillStyle = "red";
-      ctx.arc(e.x,e.y,e.size,0,Math.PI*2);
-      ctx.fill();
-
-      bullets.forEach((b,bi)=>{
-        let dx = e.x - b.x;
-        let dy = e.y - b.y;
-        let dist = Math.sqrt(dx*dx + dy*dy);
-
-        if(dist < e.size + b.size){
-          enemies.splice(ei,1);
-          bullets.splice(bi,1);
-        }
-      });
-
-      if(e.y > ch + 50){
-        enemies.splice(ei,1);
-      }
-    });
-  }
-
-  function animate(){
-    ctx.fillStyle = "rgba(0,0,0,0.3)";
-    ctx.fillRect(0,0,cw,ch);
-
-    drawPlayer();
-    drawBullets();
-    drawEnemies();
-
-    requestAnimationFrame(animate);
-  }
 
   animate(); 
 async function convertToPDF(){
