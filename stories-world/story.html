@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Story</title>
+
+<style>
+
+body{
+margin:0;
+font-family:Arial;
+background:linear-gradient(135deg,#050816,#091428,#0f172a);
+color:white;
+padding-bottom:40px;
+}
+
+header{
+text-align:center;
+padding:30px;
+background:rgba(255,255,255,0.05);
+backdrop-filter:blur(10px);
+border-bottom:1px solid rgba(255,255,255,0.1);
+}
+
+header h1{
+font-size:40px;
+margin-bottom:5px;
+background:linear-gradient(to right,#ff00ff,#00f7ff,#00ff99);
+-webkit-background-clip:text;
+-webkit-text-fill-color:transparent;
+}
+
+.brand{
+font-size:14px;
+color:#94a3b8;
+margin-bottom:10px;
+}
+
+.storyBox{
+max-width:900px;
+margin:auto;
+padding:20px;
+}
+
+.storyCard{
+background:rgba(255,255,255,0.05);
+border:1px solid rgba(255,255,255,0.1);
+border-radius:20px;
+padding:25px;
+margin-top:30px;
+}
+
+.storyCard h2{
+color:#00f7ff;
+margin-bottom:20px;
+}
+
+.storyCard p{
+line-height:1.9;
+color:#cbd5e1;
+white-space:pre-line;
+}
+
+.back{
+display:inline-block;
+margin-top:25px;
+padding:10px 15px;
+border-radius:10px;
+background:linear-gradient(to right,#00f7ff,#00ff99);
+color:black;
+text-decoration:none;
+font-weight:bold;
+}
+
+</style>
+</head>
+<body>
+
+<header>
+<h1>Stories World</h1>
+<div class="brand">By Yatharth</div>
+<p>Story Reading Page</p>
+</header>
+
+<div class="storyBox">
+
+<div class="storyCard">
+
+<h2 id="title"></h2>
+
+<p id="storyText"></p>
+
+<a href="javascript:history.back()" class="back">
+Go Back
+</a>
+
+</div>
+
+</div>
+
+<script src="stories.js"></script>
+
+<script>
+
+const params = new URLSearchParams(location.search);
+
+const id = params.get("id");
+
+const story = storiesData.find(
+s=>s.id==id
+);
+
+document.getElementById("title").innerText =
+story.title;
+
+document.getElementById("storyText").innerText =
+story.story;
+
+</script>
+
+</body>
+</html>

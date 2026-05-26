@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Stories List</title>
+
+<style>
+
+body{
+margin:0;
+font-family:Arial;
+background:linear-gradient(135deg,#050816,#091428,#0f172a);
+color:white;
+}
+
+header{
+text-align:center;
+padding:30px;
+background:rgba(255,255,255,0.05);
+backdrop-filter:blur(10px);
+border-bottom:1px solid rgba(255,255,255,0.1);
+}
+
+header h1{
+font-size:40px;
+margin-bottom:5px;
+background:linear-gradient(to right,#ff00ff,#00f7ff,#00ff99);
+-webkit-background-clip:text;
+-webkit-text-fill-color:transparent;
+}
+
+.brand{
+font-size:14px;
+color:#94a3b8;
+margin-bottom:10px;
+}
+
+.container{
+padding:20px;
+}
+
+.card{
+background:rgba(255,255,255,0.05);
+border:1px solid rgba(255,255,255,0.1);
+border-radius:20px;
+padding:20px;
+margin-bottom:20px;
+}
+
+.card h2{
+color:#00f7ff;
+}
+
+.card p{
+color:#cbd5e1;
+}
+
+.card a{
+display:inline-block;
+margin-top:15px;
+padding:10px 15px;
+border-radius:10px;
+background:linear-gradient(to right,#00f7ff,#00ff99);
+color:black;
+text-decoration:none;
+font-weight:bold;
+}
+
+</style>
+</head>
+<body>
+
+<header>
+<h1>Stories World</h1>
+<div class="brand">By Yatharth</div>
+<p id="catTitle">Stories</p>
+</header>
+
+<div class="container" id="storiesBox"></div>
+
+<script src="stories.js"></script>
+
+<script>
+
+const params = new URLSearchParams(location.search);
+
+const category = params.get("category");
+
+document.getElementById("catTitle").innerText =
+category + " Stories";
+
+const filtered = storiesData.filter(
+s=>s.category===category
+);
+
+const box = document.getElementById("storiesBox");
+
+filtered.forEach(story=>{
+
+box.innerHTML += `
+
+<div class="card">
+<h2>${story.title}</h2>
+<p>${story.desc}</p>
+
+<a href="story.html?id=${story.id}">
+Read Story
+</a>
+</div>
+
+`;
+
+});
+
+</script>
+
+</body>
+</html>
