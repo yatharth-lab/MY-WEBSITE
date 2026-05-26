@@ -162,7 +162,7 @@ content="Yatharth Tools, tools, animations, online tools" />
       font-size:26px;
     }
      .tool-text{
-  color:##b8faff;
+  color:#b8faff;
      }
       
     input, textarea{
@@ -245,18 +245,24 @@ content="Yatharth Tools, tools, animations, online tools" />
  
 </section><section style="text-align:center;padding:20px;">
 
-<div onclick="window.location.href='https://yatharth-lab.github.io/stories-world/category.html'" 
-style="
+<a href="https://yatharth-lab.github.io/stories-world/category.html"
+   style="
      display:inline-block;
      padding:14px 25px;
-     background:linear-gradient(to right,#00f7ff,#00ff99);
-     color:black;
+     background:rgba(255,255,255,0.08);
+     border:1px solid rgba(255,255,255,0.2);
+     backdrop-filter:blur(10px);
+     color:#00f7ff;
      font-weight:bold;
-     border-radius:12px;
-     text-decoration:none;">
-
-  <b>Stories World</b>
-</div>
+     border-radius:14px;
+     text-decoration:none;
+     box-shadow:0 0 20px rgba(0,255,255,0.2);
+     transition:0.3s;
+   "
+   onmouseover="this.style.transform='scale(1.05)'"
+   onmouseout="this.style.transform='scale(1)'">
+  📚 Stories World
+</a>
 
   <br><br>
   <div class="tool-card">
