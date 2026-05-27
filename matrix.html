@@ -146,11 +146,33 @@ button:hover{
 }
 
 @media(max-width:600px){
+
   h1{
     font-size:32px;
   }
 
   .typing{
+    font-size:14px;
+    width:260px;
+  }
+
+  .generator-box{
+    padding:15px;
+  }
+
+  textarea{
+    height:100px;
+    font-size:14px;
+  }
+
+  button{
+    width:100%;
+  }
+
+  .music-btn{
+    top:10px;
+    right:10px;
+    padding:10px 15px;
     font-size:14px;
   }
 }
@@ -165,48 +187,75 @@ ACCESSING MATRIX...
 <canvas id="matrix"></canvas>
 
 <div class="container">
+
   <h1>MATRIX RAIN</h1>
 
   <div class="typing">
-  <b>Welcome To YATHARTH Hack...</b>
+    <b>Welcome To YATHARTH Hack...</b>
   </div>
 
   <div class="generator-box">
-    <h2 style="margin-bottom:15px;">Coding Generator</h2>
 
-    <textarea id="input" placeholder="Type your idea... Example: login page"></textarea>
+    <h2 style="margin-bottom:15px;">
+      Coding Generator
+    </h2>
 
-    <button onclick="generateCode()">GENERATE</button>
+    <textarea id="input"
+    placeholder="Type your idea... Example: login page"></textarea>
+
+    <button onclick="generateCode()">
+      GENERATE
+    </button>
 
     <div class="output" id="output">
 Your generated code will appear here...
     </div>
+
   </div>
+
 </div>
 
-<button class="music-btn" onclick="playMusic()">🔊 MUSIC</button>
+<button class="music-btn" onclick="playMusic()">
+🔊 MUSIC
+</button>
 
-<audio id="bgmusic" loop>
-  <source src="https://files.catbox.moe/6nq6qv.mp3" type="audio/mpeg">
+<!-- Updated Audio -->
+<audio id="bgmusic" loop preload="auto">
+  <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
 </audio>
 
 <script>
+/* MATRIX EFFECT */
+
 const canvas = document.getElementById('matrix');
 const ctx = canvas.getContext('2d');
 
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
+function resizeCanvas(){
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+}
+
+resizeCanvas();
 
 const letters = '01ABCDEFGHIJKLMNOPQRSTUVWXYZ#$%&';
 const fontSize = 16;
-const columns = canvas.width / fontSize;
 
-const drops = [];
-for(let i=0;i<columns;i++){
-  drops[i]=1;
+let columns = canvas.width / fontSize;
+let drops = [];
+
+function setupDrops(){
+  columns = canvas.width / fontSize;
+  drops = [];
+
+  for(let i=0;i<columns;i++){
+    drops[i]=1;
+  }
 }
 
+setupDrops();
+
 function draw(){
+
   ctx.fillStyle='rgba(0,0,0,0.05)';
   ctx.fillRect(0,0,canvas.width,canvas.height);
 
@@ -214,11 +263,20 @@ function draw(){
   ctx.font=fontSize+'px monospace';
 
   for(let i=0;i<drops.length;i++){
-    const text=letters[Math.floor(Math.random()*letters.length)];
 
-    ctx.fillText(text,i*fontSize,drops[i]*fontSize);
+    const text =
+    letters[Math.floor(Math.random()*letters.length)];
 
-    if(drops[i]*fontSize>canvas.height && Math.random()>0.975){
+    ctx.fillText(
+      text,
+      i*fontSize,
+      drops[i]*fontSize
+    );
+
+    if(
+      drops[i]*fontSize > canvas.height &&
+      Math.random() > 0.975
+    ){
       drops[i]=0;
     }
 
@@ -229,61 +287,164 @@ function draw(){
 setInterval(draw,35);
 
 window.addEventListener('resize',()=>{
-  canvas.width = window.innerWidth;
-  canvas.height = window.innerHeight;
+
+  resizeCanvas();
+  setupDrops();
+
 });
 
+/* GENERATOR */
+
 function generateCode(){
-  const output = document.getElementById('output');
+
+  const output =
+  document.getElementById('output');
+
+  const userInput =
+  document.getElementById('input').value;
 
   const words = [
-    'matrix','override','system','kernel','cyber','neural','protocol',
-    'encrypt','decode','binary','signal','root','access','ghost',
-    'scanner','network','inject','payload','terminal','security',
-    'server','compile','quantum','tracking','firewall'
+    'matrix','override','system',
+    'kernel','cyber','neural',
+    'protocol','encrypt','decode',
+    'binary','signal','root',
+    'access','ghost','scanner',
+    'network','inject','payload',
+    'terminal','security','server',
+    'compile','quantum','tracking',
+    'firewall'
   ];
 
   const actions = [
-    'initialize','execute','render','activate','decrypt',
-    'generate','connect','compile','inject','override',
-    'scan','track','upload','boot','sync'
+    'initialize','execute',
+    'render','activate',
+    'decrypt','generate',
+    'connect','compile',
+    'inject','override',
+    'scan','track',
+    'upload','boot',
+    'sync'
   ];
 
   let fakeCode = '';
 
-  fakeCode += '// YATHARTH MATRIX SYSTEM\n';
-  fakeCode += '// ACCESS GRANTED\n';
-  fakeCode += '// STATUS: CONNECTED\n\n';
+  fakeCode +=
+  '// YATHARTH MATRIX SYSTEM\n';
+
+  fakeCode +=
+  '// ACCESS GRANTED\n';
+
+  fakeCode +=
+  '// STATUS: CONNECTED\n';
+
+  fakeCode +=
+  '// REQUEST: ' + userInput + '\n\n';
 
   for(let i=0;i<150;i++){
-    const action = actions[Math.floor(Math.random()*actions.length)];
-    const word1 = words[Math.floor(Math.random()*words.length)];
-    const word2 = words[Math.floor(Math.random()*words.length)];
-    const num = Math.floor(Math.random()*99999);
+
+    const action =
+    actions[Math.floor(
+      Math.random()*actions.length
+    )];
+
+    const word1 =
+    words[Math.floor(
+      Math.random()*words.length
+    )];
+
+    const word2 =
+    words[Math.floor(
+      Math.random()*words.length
+    )];
+
+    const num =
+    Math.floor(Math.random()*99999);
 
     const lineTypes = [
+
       `${action}${word1}(${num});`,
-      `const ${word1}${num} = ${action}System();`,
-      `${word1}.${action}('${word2}_${num}');`,
-      `if(${word1}${num} > ${num}) { overrideProtocol(); }`,
-      `while(system.${word2}) { decryptKernel(); }`,
-      `function ${action}${word2}(){ return '${word1}'; }`,
-      `${word1}_${word2}_${num} = true;`,
-      `matrix.${action}('${word1}_${num}');`
+
+      `const ${word1}${num} =
+      ${action}System();`,
+
+      `${word1}.${action}
+      ('${word2}_${num}');`,
+
+      `if(${word1}${num} >
+      ${num}) {
+      overrideProtocol();
+      }`,
+
+      `while(system.${word2}) {
+      decryptKernel();
+      }`,
+
+      `function ${action}${word2}(){
+      return '${word1}';
+      }`,
+
+      `${word1}_${word2}_${num}
+      = true;`,
+
+      `matrix.${action}
+      ('${word1}_${num}');`
+
     ];
 
-    fakeCode += lineTypes[Math.floor(Math.random()*lineTypes.length)] + '\n';
+    fakeCode +=
+    lineTypes[
+      Math.floor(
+        Math.random()*lineTypes.length
+      )
+    ] + '\n';
+
   }
 
-  fakeCode += '\n// MATRIX EXECUTION COMPLETE';
+  fakeCode +=
+  '\n// MATRIX EXECUTION COMPLETE';
 
   output.textContent = fakeCode;
 }
 
+/* MUSIC */
+
 function playMusic(){
-  const music = document.getElementById('bgmusic');
+
+  const music =
+  document.getElementById('bgmusic');
+
   music.volume = 1;
-  music.play();
+
+  if(music.paused){
+
+    music.play()
+    .then(()=>{
+
+      document.querySelector(
+      '.music-btn').innerHTML =
+      '⏸ STOP';
+
+    })
+
+    .catch((err)=>{
+
+      alert(
+      'Music blocked by browser. Tap again.'
+      );
+
+      console.log(err);
+
+    });
+
+  }else{
+
+    music.pause();
+
+    document.querySelector(
+    '.music-btn').innerHTML =
+    '🔊 MUSIC';
+
+  }
 }
 </script>
 
