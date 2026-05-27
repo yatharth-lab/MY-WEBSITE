@@ -1,24 +1,27 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Matrix Rain - YATHARTH Tools</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Matrix MP3 Player</title>
 
 <style>
+
 *{
   margin:0;
   padding:0;
   box-sizing:border-box;
-  font-family:Arial, sans-serif;
+  font-family:Arial,sans-serif;
 }
 
 body{
-  overflow-x:hidden;
-  overflow-y:auto;
   background:black;
+  overflow:hidden;
   color:#00ff66;
 }
+
+/* MATRIX BACKGROUND */
 
 canvas{
   position:fixed;
@@ -29,243 +32,304 @@ canvas{
   z-index:-1;
 }
 
-.container{
-  min-height:100vh;
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  justify-content:center;
+/* PLAYER */
+
+.player{
+  width:90%;
+  max-width:420px;
+
+  position:absolute;
+  top:50%;
+  left:50%;
+
+  transform:translate(-50%,-50%);
+
+  background:rgba(0,0,0,0.75);
+
+  border:2px solid #00ff66;
+
+  border-radius:20px;
+
+  padding:25px;
+
   text-align:center;
-  padding:20px;
+
+  box-shadow:0 0 25px #00ff66;
 }
 
 h1{
-  font-size:45px;
-  margin-bottom:10px;
+  margin-bottom:20px;
   text-shadow:0 0 15px #00ff66;
 }
 
-.typing{
+/* MUSIC ICON */
+
+.music-icon{
+  font-size:80px;
+  margin-bottom:20px;
+  animation:pulse 2s infinite;
+}
+
+@keyframes pulse{
+
+  0%{
+    transform:scale(1);
+  }
+
+  50%{
+    transform:scale(1.1);
+  }
+
+  100%{
+    transform:scale(1);
+  }
+
+}
+
+/* SONG NAME */
+
+.song-name{
+  margin-bottom:20px;
   font-size:18px;
-  margin-bottom:30px;
-  border-right:2px solid #00ff66;
-  white-space:nowrap;
-  overflow:hidden;
-  width:0;
-  animation:typing 4s steps(35,end) forwards, blink .8s infinite;
+  word-break:break-word;
 }
 
-@keyframes typing{
-  from{width:0}
-  to{width:320px}
-}
+/* PROGRESS */
 
-@keyframes blink{
-  50%{border-color:transparent}
-}
-
-.generator-box{
+.progress-container{
   width:100%;
-  max-width:700px;
-  background:rgba(0,0,0,0.7);
-  border:2px solid #00ff66;
-  border-radius:15px;
-  padding:20px;
-  box-shadow:0 0 20px #00ff66;
-}
+  height:8px;
 
-textarea{
-  width:100%;
-  height:120px;
-  background:black;
-  color:#00ff66;
-  border:1px solid #00ff66;
+  background:#111;
+
   border-radius:10px;
-  padding:15px;
-  resize:none;
-  font-size:15px;
+
+  overflow:hidden;
+
+  margin-bottom:20px;
+}
+
+.progress{
+  width:0%;
+  height:100%;
+
+  background:#00ff66;
+}
+
+/* TIME */
+
+.time{
+  display:flex;
+  justify-content:space-between;
+
+  font-size:14px;
+
+  margin-bottom:20px;
+}
+
+/* BUTTONS */
+
+.controls{
+  display:flex;
+  justify-content:center;
+  gap:15px;
 }
 
 button{
-  margin-top:15px;
-  padding:12px 25px;
+
   background:#00ff66;
   color:black;
+
   border:none;
-  border-radius:10px;
+
+  border-radius:12px;
+
+  padding:12px 18px;
+
+  cursor:pointer;
+
   font-size:16px;
   font-weight:bold;
-  cursor:pointer;
-  transition:0.3s;
+
+  transition:.3s;
 }
 
 button:hover{
-  transform:scale(1.05);
+  transform:scale(1.08);
   box-shadow:0 0 15px #00ff66;
 }
 
-.output{
+/* FILE INPUT */
+
+.file-input{
   margin-top:20px;
-  background:black;
-  border:1px solid #00ff66;
-  border-radius:10px;
-  padding:15px;
-  text-align:left;
-  white-space:pre-wrap;
-  min-height:120px;
-  max-height:70vh;
-  overflow-y:auto;
-  overflow-x:hidden;
-  word-break:break-word;
-  font-size:14px;
 }
 
-.music-btn{
-  position:fixed;
-  top:20px;
-  right:20px;
-  z-index:10;
-}
-
-.loading{
-  position:fixed;
-  inset:0;
-  background:black;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-size:30px;
+input[type="file"]{
   color:#00ff66;
-  z-index:999;
-  animation:hideLoader 3s forwards;
-}
-
-@keyframes hideLoader{
-  0%,90%{opacity:1}
-  100%{opacity:0;visibility:hidden}
+  width:100%;
 }
 
 @media(max-width:600px){
 
-  h1{
-    font-size:32px;
+  .player{
+    padding:18px;
   }
 
-  .typing{
-    font-size:14px;
-    width:260px;
-  }
-
-  .generator-box{
-    padding:15px;
-  }
-
-  textarea{
-    height:100px;
-    font-size:14px;
+  .music-icon{
+    font-size:60px;
   }
 
   button{
-    width:100%;
-  }
-
-  .music-btn{
-    top:10px;
-    right:10px;
     padding:10px 15px;
     font-size:14px;
   }
+
 }
+
 </style>
 </head>
+
 <body>
 
-<div class="loading">
-ACCESSING MATRIX...
-</div>
+<!-- MATRIX -->
 
 <canvas id="matrix"></canvas>
 
-<div class="container">
+<!-- PLAYER -->
 
-  <h1>MATRIX RAIN</h1>
+<div class="player">
 
-  <div class="typing">
-    <b>Welcome To YATHARTH Hack...</b>
+  <h1>MATRIX MP3</h1>
+
+  <div class="music-icon">
+    🎵
   </div>
 
-  <div class="generator-box">
+  <div class="song-name" id="songName">
+    No song selected
+  </div>
 
-    <h2 style="margin-bottom:15px;">
-      Coding Generator
-    </h2>
+  <!-- PROGRESS -->
 
-    <textarea id="input"
-    placeholder="Type your idea... Example: login page"></textarea>
+  <div class="progress-container">
 
-    <button onclick="generateCode()">
-      GENERATE
-    </button>
-
-    <div class="output" id="output">
-Your generated code will appear here...
+    <div class="progress" id="progress">
     </div>
 
   </div>
 
+  <!-- TIME -->
+
+  <div class="time">
+
+    <span id="currentTime">
+      0:00
+    </span>
+
+    <span id="duration">
+      0:00
+    </span>
+
+  </div>
+
+  <!-- CONTROLS -->
+
+  <div class="controls">
+
+    <button onclick="togglePlay()">
+      ▶ / ⏸
+    </button>
+
+    <button onclick="stopMusic()">
+      ⏹ STOP
+    </button>
+
+  </div>
+
+  <!-- FILE -->
+
+  <div class="file-input">
+
+    <input
+    type="file"
+    id="fileInput"
+    accept="audio/*">
+
+  </div>
+
 </div>
 
-<button class="music-btn" onclick="playMusic()">
-🔊 MUSIC
-</button>
+<!-- AUDIO -->
 
-<!-- Updated Audio -->
-<audio id="bgmusic" loop preload="auto">
-  <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
-</audio>
+<audio id="audio"></audio>
 
 <script>
-/* MATRIX EFFECT */
 
-const canvas = document.getElementById('matrix');
-const ctx = canvas.getContext('2d');
+/* =========================
+   MATRIX EFFECT
+========================= */
+
+const canvas =
+document.getElementById("matrix");
+
+const ctx =
+canvas.getContext("2d");
 
 function resizeCanvas(){
-  canvas.width = window.innerWidth;
-  canvas.height = window.innerHeight;
+
+  canvas.width =
+  window.innerWidth;
+
+  canvas.height =
+  window.innerHeight;
+
 }
 
 resizeCanvas();
 
-const letters = '01ABCDEFGHIJKLMNOPQRSTUVWXYZ#$%&';
+const letters =
+"01ABCDEFGHIJKLMNOPQRSTUVWXYZ#$%&";
+
 const fontSize = 16;
 
-let columns = canvas.width / fontSize;
+let columns =
+Math.floor(canvas.width/fontSize);
+
 let drops = [];
 
-function setupDrops(){
-  columns = canvas.width / fontSize;
-  drops = [];
+for(let i=0;i<columns;i++){
 
-  for(let i=0;i<columns;i++){
-    drops[i]=1;
-  }
+  drops[i]=1;
+
 }
 
-setupDrops();
+function drawMatrix(){
 
-function draw(){
+  ctx.fillStyle =
+  "rgba(0,0,0,0.05)";
 
-  ctx.fillStyle='rgba(0,0,0,0.05)';
-  ctx.fillRect(0,0,canvas.width,canvas.height);
+  ctx.fillRect(
+    0,
+    0,
+    canvas.width,
+    canvas.height
+  );
 
-  ctx.fillStyle='#00ff66';
-  ctx.font=fontSize+'px monospace';
+  ctx.fillStyle =
+  "#00ff66";
+
+  ctx.font =
+  fontSize + "px monospace";
 
   for(let i=0;i<drops.length;i++){
 
     const text =
-    letters[Math.floor(Math.random()*letters.length)];
+    letters.charAt(
+      Math.floor(
+        Math.random()*letters.length
+      )
+    );
 
     ctx.fillText(
       text,
@@ -274,178 +338,149 @@ function draw(){
     );
 
     if(
-      drops[i]*fontSize > canvas.height &&
+      drops[i]*fontSize >
+      canvas.height &&
       Math.random() > 0.975
     ){
       drops[i]=0;
     }
 
     drops[i]++;
+
   }
+
 }
 
-setInterval(draw,35);
+setInterval(drawMatrix,35);
 
-window.addEventListener('resize',()=>{
+window.addEventListener(
+"resize",
+resizeCanvas
+);
 
-  resizeCanvas();
-  setupDrops();
+/* =========================
+   MUSIC PLAYER
+========================= */
+
+const audio =
+document.getElementById("audio");
+
+const fileInput =
+document.getElementById("fileInput");
+
+const songName =
+document.getElementById("songName");
+
+const progress =
+document.getElementById("progress");
+
+const currentTime =
+document.getElementById("currentTime");
+
+const duration =
+document.getElementById("duration");
+
+/* FILE SELECT */
+
+fileInput.addEventListener(
+"change",
+function(){
+
+  const file =
+  this.files[0];
+
+  if(file){
+
+    const url =
+    URL.createObjectURL(file);
+
+    audio.src = url;
+
+    songName.textContent =
+    file.name;
+
+    audio.play();
+
+  }
 
 });
 
-/* GENERATOR */
+/* PLAY / PAUSE */
 
-function generateCode(){
+async function togglePlay(){
 
-  const output =
-  document.getElementById('output');
+  if(!audio.src){
 
-  const userInput =
-  document.getElementById('input').value;
+    alert(
+    "Please select an MP3 file first."
+    );
 
-  const words = [
-    'matrix','override','system',
-    'kernel','cyber','neural',
-    'protocol','encrypt','decode',
-    'binary','signal','root',
-    'access','ghost','scanner',
-    'network','inject','payload',
-    'terminal','security','server',
-    'compile','quantum','tracking',
-    'firewall'
-  ];
-
-  const actions = [
-    'initialize','execute',
-    'render','activate',
-    'decrypt','generate',
-    'connect','compile',
-    'inject','override',
-    'scan','track',
-    'upload','boot',
-    'sync'
-  ];
-
-  let fakeCode = '';
-
-  fakeCode +=
-  '// YATHARTH MATRIX SYSTEM\n';
-
-  fakeCode +=
-  '// ACCESS GRANTED\n';
-
-  fakeCode +=
-  '// STATUS: CONNECTED\n';
-
-  fakeCode +=
-  '// REQUEST: ' + userInput + '\n\n';
-
-  for(let i=0;i<150;i++){
-
-    const action =
-    actions[Math.floor(
-      Math.random()*actions.length
-    )];
-
-    const word1 =
-    words[Math.floor(
-      Math.random()*words.length
-    )];
-
-    const word2 =
-    words[Math.floor(
-      Math.random()*words.length
-    )];
-
-    const num =
-    Math.floor(Math.random()*99999);
-
-    const lineTypes = [
-
-      `${action}${word1}(${num});`,
-
-      `const ${word1}${num} =
-      ${action}System();`,
-
-      `${word1}.${action}
-      ('${word2}_${num}');`,
-
-      `if(${word1}${num} >
-      ${num}) {
-      overrideProtocol();
-      }`,
-
-      `while(system.${word2}) {
-      decryptKernel();
-      }`,
-
-      `function ${action}${word2}(){
-      return '${word1}';
-      }`,
-
-      `${word1}_${word2}_${num}
-      = true;`,
-
-      `matrix.${action}
-      ('${word1}_${num}');`
-
-    ];
-
-    fakeCode +=
-    lineTypes[
-      Math.floor(
-        Math.random()*lineTypes.length
-      )
-    ] + '\n';
+    return;
 
   }
 
-  fakeCode +=
-  '\n// MATRIX EXECUTION COMPLETE';
+  if(audio.paused){
 
-  output.textContent = fakeCode;
-}
-
-/* MUSIC */
-
-function playMusic(){
-
-  const music =
-  document.getElementById('bgmusic');
-
-  music.volume = 1;
-
-  if(music.paused){
-
-    music.play()
-    .then(()=>{
-
-      document.querySelector(
-      '.music-btn').innerHTML =
-      '⏸ STOP';
-
-    })
-
-    .catch((err)=>{
-
-      alert(
-      'Music blocked by browser. Tap again.'
-      );
-
-      console.log(err);
-
-    });
+    await audio.play();
 
   }else{
 
-    music.pause();
-
-    document.querySelector(
-    '.music-btn').innerHTML =
-    '🔊 MUSIC';
+    audio.pause();
 
   }
+
 }
+
+/* STOP */
+
+function stopMusic(){
+
+  audio.pause();
+
+  audio.currentTime = 0;
+
+}
+
+/* PROGRESS */
+
+audio.addEventListener(
+"timeupdate",
+()=>{
+
+  if(audio.duration){
+
+    const percent =
+    (audio.currentTime /
+    audio.duration) * 100;
+
+    progress.style.width =
+    percent + "%";
+
+    currentTime.textContent =
+    formatTime(audio.currentTime);
+
+    duration.textContent =
+    formatTime(audio.duration);
+
+  }
+
+});
+
+/* FORMAT TIME */
+
+function formatTime(time){
+
+  const mins =
+  Math.floor(time/60);
+
+  const secs =
+  Math.floor(time%60);
+
+  return mins + ":" +
+  (secs < 10 ? "0"+secs : secs);
+
+}
+
 </script>
 
 </body>
