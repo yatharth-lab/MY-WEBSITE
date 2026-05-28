@@ -3,9 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Stories List</title>
+
+<title>Stories List | Stories World</title>
 
 <style>
+
 *{
 margin:0;
 padding:0;
@@ -20,128 +22,185 @@ min-height:100vh;
 }
 
 /* HEADER */
+
 header{
 text-align:center;
-padding:18px 12px;
+padding:24px 14px;
 background:rgba(255,255,255,0.05);
-backdrop-filter:blur(10px);
+backdrop-filter:blur(12px);
 border-bottom:1px solid rgba(255,255,255,0.08);
 position:sticky;
 top:0;
-z-index:10;
+z-index:100;
 }
 
 header h1{
-font-size:26px;
-font-weight:700;
+font-size:32px;
+font-weight:800;
+margin-bottom:5px;
 background:linear-gradient(to right,#ff00ff,#00f7ff,#00ff99);
 -webkit-background-clip:text;
 -webkit-text-fill-color:transparent;
-margin-bottom:4px;
+}
+
+.brand{
+font-size:11px;
+color:#94a3b8;
+margin-bottom:8px;
+letter-spacing:2px;
+opacity:0.8;
 }
 
 header p{
-font-size:13px;
+font-size:15px;
 color:#cbd5e1;
 }
 
 /* CONTAINER */
+
 .container{
+max-width:950px;
+margin:auto;
+padding:20px;
 display:grid;
 grid-template-columns:1fr;
-gap:14px;
-padding:14px;
-max-width:700px;
-margin:auto;
+gap:18px;
 }
 
 /* CARD */
-.card,
-.storyCard{
+
+.card{
+position:relative;
+overflow:hidden;
 background:rgba(255,255,255,0.05);
 border:1px solid rgba(255,255,255,0.08);
-border-radius:16px;
-padding:14px;
-transition:0.25s;
-backdrop-filter:blur(8px);
+border-radius:22px;
+padding:22px;
+transition:0.3s;
+backdrop-filter:blur(10px);
 }
 
-.card:hover,
-.storyCard:hover{
-transform:translateY(-3px);
-box-shadow:0 0 15px rgba(0,255,255,0.15);
+.card::before{
+content:"";
+position:absolute;
+top:-40px;
+right:-40px;
+width:100px;
+height:100px;
+background:rgba(0,247,255,0.08);
+border-radius:50%;
 }
 
-.card h2,
-.storyCard h2{
-font-size:19px;
-margin-bottom:8px;
+.card:hover{
+transform:translateY(-5px);
+border-color:rgba(0,247,255,0.5);
+box-shadow:0 8px 25px rgba(0,0,0,0.35);
+}
+
+.card h2{
+font-size:24px;
+margin-bottom:12px;
 color:#00f7ff;
+position:relative;
+z-index:1;
 }
 
-.card p,
-.storyCard p{
-font-size:14px;
-line-height:1.7;
+.card p{
+font-size:15px;
+line-height:1.8;
 color:#cbd5e1;
+position:relative;
+z-index:1;
 }
 
 /* BUTTON */
-.card a,
-.back{
+
+.card a{
 display:inline-block;
-margin-top:12px;
-padding:8px 14px;
-border-radius:10px;
+margin-top:18px;
+padding:11px 16px;
+border-radius:12px;
 background:linear-gradient(to right,#00f7ff,#00ff99);
 color:#001018;
 text-decoration:none;
-font-size:13px;
+font-size:14px;
 font-weight:700;
 transition:0.25s;
+position:relative;
+z-index:1;
 }
 
-.card a:hover,
-.back:hover{
-transform:scale(1.03);
+.card a:hover{
+transform:scale(1.05);
 }
 
-/* STORY PAGE */
-.storyBox{
-max-width:800px;
-margin:auto;
-padding:14px;
+/* EMPTY */
+
+.empty{
+text-align:center;
+padding:40px 20px;
+color:#94a3b8;
+font-size:16px;
 }
 
-/* TABLET / DESKTOP */
-@media(min-width:700px){
+/* MOBILE */
+
+@media(max-width:600px){
+
+header{
+padding:20px 12px;
+}
+
+header h1{
+font-size:27px;
+}
+
+.container{
+padding:16px;
+gap:16px;
+}
+
+.card{
+padding:18px;
+border-radius:18px;
+}
+
+.card h2{
+font-size:21px;
+}
+
+.card p{
+font-size:14px;
+}
+
+}
+
+/* DESKTOP */
+
+@media(min-width:800px){
 
 .container{
 grid-template-columns:repeat(2,1fr);
 }
 
-header h1{
-font-size:34px;
 }
 
-.card h2,
-.storyCard h2{
-font-size:22px;
-}
-
-.card p,
-.storyCard p{
-font-size:15px;
-}
-
-}
 </style>
 </head>
 <body>
 
 <header>
+
 <h1>Stories World</h1>
-<p id="catTitle"></p>
+
+<div class="brand">
+By Yatharth
+</div>
+
+<p id="catTitle">
+Stories
+</p>
+
 </header>
 
 <div class="container" id="storiesBox"></div>
@@ -149,29 +208,54 @@ font-size:15px;
 <script src="stories.js"></script>
 
 <script>
+
 const params = new URLSearchParams(location.search);
+
 const category = params.get("category");
 
-document.getElementById("catTitle").innerText = category + " Stories";
+document.getElementById("catTitle").innerText =
+category + " Stories";
 
 const filtered = storiesData.filter(s =>
-  s.category.toLowerCase() === category.toLowerCase()
+s.category.toLowerCase() === category.toLowerCase()
 );
 
 const box = document.getElementById("storiesBox");
 
-filtered.forEach(story => {
-  box.innerHTML += `
-    <div class="card">
-      <h2>${story.title}</h2>
-      <p>${story.desc}</p>
+if(filtered.length === 0){
 
-      <a href="story.html?id=${story.id}">
-        Read Story
-      </a>
-    </div>
-  `;
+box.innerHTML = `
+
+<div class="empty">
+No stories found in this category.
+</div>
+
+`;
+
+}
+
+filtered.forEach(story => {
+
+box.innerHTML += `
+
+<div class="card">
+
+<h2>${story.title}</h2>
+
+<p>
+${story.desc}
+</p>
+
+<a href="story.html?id=${story.id}">
+Read Story
+</a>
+
+</div>
+
+`;
+
 });
+
 </script>
 
 </body>
