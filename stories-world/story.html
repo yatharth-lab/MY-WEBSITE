@@ -84,14 +84,28 @@ color:#00f7ff;
 line-height:1.3;
 }
 
-/* STORY TEXT */
+/* A4 PAGE STYLE */
 
-.storyCard p{
-font-size:17px;
+.page{
+background:rgba(255,255,255,0.05);
+border:1px solid rgba(255,255,255,0.08);
+border-radius:20px;
+padding:30px;
+margin-top:30px;
 line-height:2;
+font-size:17px;
 color:#cbd5e1;
 white-space:pre-line;
+box-shadow:0 10px 25px rgba(0,0,0,0.25);
 word-break:break-word;
+}
+
+.pageNumber{
+margin-top:25px;
+text-align:center;
+font-size:14px;
+color:#00f7ff;
+opacity:0.8;
 }
 
 /* BUTTON */
@@ -111,6 +125,18 @@ transition:0.25s;
 
 .back:hover{
 transform:scale(1.05);
+}
+
+/* DESKTOP */
+
+@media(min-width:700px){
+
+.page{
+min-height:1100px;
+padding:60px;
+font-size:18px;
+}
+
 }
 
 /* MOBILE */
@@ -140,9 +166,11 @@ font-size:27px;
 margin-bottom:20px;
 }
 
-.storyCard p{
-font-size:17px;
-line-height:2;
+.page{
+padding:22px;
+font-size:16px;
+line-height:1.9;
+min-height:auto;
 }
 
 .back{
@@ -178,7 +206,7 @@ Story Reading Page
 
 <h2 id="title"></h2>
 
-<p id="storyText"></p>
+<div id="storyPages"></div>
 
 <a class="back" href="#">
 Go Back
@@ -223,8 +251,39 @@ fetch(story.file)
 
 .then(data => {
 
-document.getElementById("storyText").innerText =
-data;
+const container =
+document.getElementById("storyPages");
+
+/* AUTO PAGE SPLIT */
+
+const charsPerPage = 3000;
+
+const totalPages =
+Math.ceil(data.length / charsPerPage);
+
+for(let i = 0; i < totalPages; i++){
+
+const text =
+data.slice(
+i * charsPerPage,
+(i + 1) * charsPerPage
+);
+
+container.innerHTML += `
+
+<div class="page">
+
+${text}
+
+<div class="pageNumber">
+Page ${i + 1}
+</div>
+
+</div>
+
+`;
+
+}
 
 });
 
