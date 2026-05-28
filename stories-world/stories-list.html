@@ -3,79 +3,145 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>Stories List</title>
 
 <style>
-
-body{
+*{
 margin:0;
-font-family:Arial;
-background:linear-gradient(135deg,#050816,#091428,#0f172a);
-color:white;
+padding:0;
+box-sizing:border-box;
 }
 
+body{
+font-family:Arial,sans-serif;
+background:linear-gradient(135deg,#050816,#091428,#0f172a);
+color:white;
+min-height:100vh;
+}
+
+/* HEADER */
 header{
 text-align:center;
-padding:30px;
+padding:18px 12px;
 background:rgba(255,255,255,0.05);
 backdrop-filter:blur(10px);
-border-bottom:1px solid rgba(255,255,255,0.1);
+border-bottom:1px solid rgba(255,255,255,0.08);
+position:sticky;
+top:0;
+z-index:10;
 }
 
 header h1{
-font-size:40px;
-margin-bottom:5px;
+font-size:26px;
+font-weight:700;
 background:linear-gradient(to right,#ff00ff,#00f7ff,#00ff99);
 -webkit-background-clip:text;
 -webkit-text-fill-color:transparent;
+margin-bottom:4px;
 }
 
-.brand{
-font-size:14px;
-color:#94a3b8;
-margin-bottom:10px;
-}
-
-.container{
-padding:20px;
-}
-
-.card{
-background:rgba(255,255,255,0.05);
-border:1px solid rgba(255,255,255,0.1);
-border-radius:20px;
-padding:20px;
-margin-bottom:20px;
-}
-
-.card h2{
-color:#00f7ff;
-}
-
-.card p{
+header p{
+font-size:13px;
 color:#cbd5e1;
 }
 
-.card a{
-display:inline-block;
-margin-top:15px;
-padding:10px 15px;
-border-radius:10px;
-background:linear-gradient(to right,#00f7ff,#00ff99);
-color:black;
-text-decoration:none;
-font-weight:bold;
+/* CONTAINER */
+.container{
+display:grid;
+grid-template-columns:1fr;
+gap:14px;
+padding:14px;
+max-width:700px;
+margin:auto;
 }
 
+/* CARD */
+.card,
+.storyCard{
+background:rgba(255,255,255,0.05);
+border:1px solid rgba(255,255,255,0.08);
+border-radius:16px;
+padding:14px;
+transition:0.25s;
+backdrop-filter:blur(8px);
+}
+
+.card:hover,
+.storyCard:hover{
+transform:translateY(-3px);
+box-shadow:0 0 15px rgba(0,255,255,0.15);
+}
+
+.card h2,
+.storyCard h2{
+font-size:19px;
+margin-bottom:8px;
+color:#00f7ff;
+}
+
+.card p,
+.storyCard p{
+font-size:14px;
+line-height:1.7;
+color:#cbd5e1;
+}
+
+/* BUTTON */
+.card a,
+.back{
+display:inline-block;
+margin-top:12px;
+padding:8px 14px;
+border-radius:10px;
+background:linear-gradient(to right,#00f7ff,#00ff99);
+color:#001018;
+text-decoration:none;
+font-size:13px;
+font-weight:700;
+transition:0.25s;
+}
+
+.card a:hover,
+.back:hover{
+transform:scale(1.03);
+}
+
+/* STORY PAGE */
+.storyBox{
+max-width:800px;
+margin:auto;
+padding:14px;
+}
+
+/* TABLET / DESKTOP */
+@media(min-width:700px){
+
+.container{
+grid-template-columns:repeat(2,1fr);
+}
+
+header h1{
+font-size:34px;
+}
+
+.card h2,
+.storyCard h2{
+font-size:22px;
+}
+
+.card p,
+.storyCard p{
+font-size:15px;
+}
+
+}
 </style>
 </head>
 <body>
 
 <header>
 <h1>Stories World</h1>
-<div class="brand">By Yatharth</div>
-<p id="catTitle">Stories</p>
+<p id="catTitle"></p>
 </header>
 
 <div class="container" id="storiesBox"></div>
@@ -83,37 +149,29 @@ font-weight:bold;
 <script src="stories.js"></script>
 
 <script>
-
 const params = new URLSearchParams(location.search);
-
 const category = params.get("category");
 
-document.getElementById("catTitle").innerText =
-category + " Stories";
+document.getElementById("catTitle").innerText = category + " Stories";
 
-const filtered = storiesData.filter(
-s=>s.category===category
+const filtered = storiesData.filter(s =>
+  s.category.toLowerCase() === category.toLowerCase()
 );
 
 const box = document.getElementById("storiesBox");
 
-filtered.forEach(story=>{
+filtered.forEach(story => {
+  box.innerHTML += `
+    <div class="card">
+      <h2>${story.title}</h2>
+      <p>${story.desc}</p>
 
-box.innerHTML += `
-
-<div class="card">
-<h2>${story.title}</h2>
-<p>${story.desc}</p>
-
-<a href="story.html?id=${story.id}">
-Read Story
-</a>
-</div>
-
-`;
-
+      <a href="story.html?id=${story.id}">
+        Read Story
+      </a>
+    </div>
+  `;
 });
-
 </script>
 
 </body>
