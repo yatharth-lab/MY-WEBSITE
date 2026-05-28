@@ -84,7 +84,7 @@ color:#00f7ff;
 line-height:1.3;
 }
 
-/* A4 PAGE STYLE */
+/* PAGE */
 
 .page{
 background:rgba(255,255,255,0.05);
@@ -100,8 +100,10 @@ box-shadow:0 10px 25px rgba(0,0,0,0.25);
 word-break:break-word;
 }
 
+/* PAGE NUMBER */
+
 .pageNumber{
-margin-top:25px;
+margin-top:12px;
 text-align:center;
 font-size:14px;
 color:#00f7ff;
@@ -125,18 +127,6 @@ transition:0.25s;
 
 .back:hover{
 transform:scale(1.05);
-}
-
-/* DESKTOP */
-
-@media(min-width:700px){
-
-.page{
-min-height:1100px;
-padding:60px;
-font-size:18px;
-}
-
 }
 
 /* MOBILE */
@@ -170,7 +160,6 @@ margin-bottom:20px;
 padding:22px;
 font-size:16px;
 line-height:1.9;
-min-height:auto;
 }
 
 .back{
@@ -275,10 +264,10 @@ container.innerHTML += `
 
 ${text}
 
-<div class="pageNumber">
-Page ${i + 1}
 </div>
 
+<div class="pageNumber">
+Page ${i + 1}
 </div>
 
 `;
