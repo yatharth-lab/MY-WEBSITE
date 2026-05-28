@@ -3,7 +3,6 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>Stories World</title>
 
 <style>
@@ -113,7 +112,8 @@ max-width:800px;
 margin:auto;
 padding:14px;
 }
-  footer{
+
+footer{
 text-align:center;
 padding:18px 10px;
 font-size:13px;
@@ -122,7 +122,7 @@ border-top:1px solid rgba(255,255,255,0.08);
 margin-top:25px;
 background:rgba(255,255,255,0.03);
 backdrop-filter:blur(8px);
-  }
+}
 
 /* TABLET / DESKTOP */
 @media(min-width:700px){
@@ -145,48 +145,35 @@ font-size:22px;
 font-size:15px;
 }
 
-  
-
+}
 </style>
 </head>
 <body>
 
 <header>
 <h1>Stories World</h1>
-<div class="brand">By Yatharth</div>
-<p>Choose Your Favorite Category</p>
+<p>Choose Category</p>
 </header>
 
 <div class="container" id="categoryBox"></div>
 
-<footer>
-© 2026 Stories World | Yatharth Tools
-</footer>
-
 <script src="stories.js"></script>
 
 <script>
-
-const categories = [...new Set(storiesData.map(s=>s.category))];
+const categories = [...new Set(storiesData.map(s => s.category))];
 
 const box = document.getElementById("categoryBox");
 
-categories.forEach(cat=>{
-
-box.innerHTML += `
-
-<div class="card">
-<h2>${cat}</h2>
-<p>Explore amazing ${cat} stories.</p>
-<a href="stories-list.html?category=${cat}">
-Open Category
-</a>
-</div>
-
-`;
-
+categories.forEach(cat => {
+  box.innerHTML += `
+    <div class="card">
+      <h2>${cat}</h2>
+      <a href="stories-list.html?category=${cat}">
+        Open Category
+      </a>
+    </div>
+  `;
 });
-
 </script>
 
 </body>
