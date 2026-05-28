@@ -3,9 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Stories World</title>
+
+<title>Stories World | By Yatharth</title>
 
 <style>
+
 *{
 margin:0;
 padding:0;
@@ -14,166 +16,222 @@ box-sizing:border-box;
 
 body{
 font-family:Arial,sans-serif;
-background:linear-gradient(135deg,#050816,#091428,#0f172a);
+background:
+radial-gradient(circle at top,#1e293b 0%,#0f172a 45%,#020617 100%);
 color:white;
 min-height:100vh;
 }
 
 /* HEADER */
+
 header{
 text-align:center;
-padding:18px 12px;
-background:rgba(255,255,255,0.05);
-backdrop-filter:blur(10px);
+padding:28px 15px 24px;
+background:rgba(15,23,42,0.75);
+backdrop-filter:blur(14px);
 border-bottom:1px solid rgba(255,255,255,0.08);
 position:sticky;
 top:0;
-z-index:10;
-}
-
-header h1{
-font-size:26px;
-font-weight:700;
-background:linear-gradient(to right,#ff00ff,#00f7ff,#00ff99);
--webkit-background-clip:text;
--webkit-text-fill-color:transparent;
-margin-bottom:4px;
-}
-
-header p{
-font-size:13px;
-color:#cbd5e1;
-}
-
-/* CONTAINER */
-.container{
-display:grid;
-grid-template-columns:1fr;
-gap:14px;
-padding:14px;
-max-width:700px;
-margin:auto;
-}
-
-/* CARD */
-.card,
-.storyCard{
-background:rgba(255,255,255,0.05);
-border:1px solid rgba(255,255,255,0.08);
-border-radius:16px;
-padding:14px;
-transition:0.25s;
-backdrop-filter:blur(8px);
-}
-
-.card:hover,
-.storyCard:hover{
-transform:translateY(-3px);
-box-shadow:0 0 15px rgba(0,255,255,0.15);
-}
-
-.card h2,
-.storyCard h2{
-font-size:19px;
-margin-bottom:8px;
-color:#00f7ff;
-}
-
-.card p,
-.storyCard p{
-font-size:14px;
-line-height:1.7;
-color:#cbd5e1;
-}
-
-/* BUTTON */
-.card a,
-.back{
-display:inline-block;
-margin-top:12px;
-padding:8px 14px;
-border-radius:10px;
-background:linear-gradient(to right,#00f7ff,#00ff99);
-color:#001018;
-text-decoration:none;
-font-size:13px;
-font-weight:700;
-transition:0.25s;
-}
-
-.card a:hover,
-.back:hover{
-transform:scale(1.03);
-}
-
-/* STORY PAGE */
-.storyBox{
-max-width:800px;
-margin:auto;
-padding:14px;
-}
-
-footer{
-text-align:center;
-padding:18px 10px;
-font-size:13px;
-color:#94a3b8;
-border-top:1px solid rgba(255,255,255,0.08);
-margin-top:25px;
-background:rgba(255,255,255,0.03);
-backdrop-filter:blur(8px);
-}
-
-/* TABLET / DESKTOP */
-@media(min-width:700px){
-
-.container{
-grid-template-columns:repeat(2,1fr);
+z-index:100;
 }
 
 header h1{
 font-size:34px;
+font-weight:800;
+margin-bottom:4px;
+background:linear-gradient(to right,#38bdf8,#22d3ee,#4ade80);
+-webkit-background-clip:text;
+-webkit-text-fill-color:transparent;
 }
 
-.card h2,
-.storyCard h2{
-font-size:22px;
+.brand{
+font-size:11px;
+color:#94a3b8;
+margin-bottom:8px;
+letter-spacing:2px;
+opacity:0.8;
 }
 
-.card p,
-.storyCard p{
+header p{
 font-size:15px;
+color:#cbd5e1;
+}
+
+/* CONTAINER */
+
+.container{
+max-width:1100px;
+margin:auto;
+padding:22px;
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+gap:22px;
+}
+
+/* CARD */
+
+.card{
+position:relative;
+overflow:hidden;
+background:rgba(30,41,59,0.72);
+border:1px solid rgba(255,255,255,0.08);
+border-radius:24px;
+padding:24px;
+transition:0.3s;
+backdrop-filter:blur(12px);
+}
+
+.card::before{
+content:"";
+position:absolute;
+top:-50px;
+right:-50px;
+width:120px;
+height:120px;
+background:rgba(56,189,248,0.15);
+border-radius:50%;
+filter:blur(10px);
+}
+
+.card:hover{
+transform:translateY(-6px);
+border-color:#38bdf8;
+box-shadow:0 10px 25px rgba(0,0,0,0.35);
+}
+
+.card h2{
+font-size:24px;
+margin-bottom:12px;
+color:#f8fafc;
+position:relative;
+z-index:1;
+}
+
+.card p{
+font-size:14px;
+line-height:1.7;
+color:#cbd5e1;
+position:relative;
+z-index:1;
+}
+
+/* BUTTON */
+
+.card a{
+display:inline-block;
+margin-top:18px;
+padding:11px 16px;
+border-radius:14px;
+background:linear-gradient(to right,#38bdf8,#22d3ee);
+color:#082f49;
+text-decoration:none;
+font-size:14px;
+font-weight:700;
+transition:0.25s;
+position:relative;
+z-index:1;
+}
+
+.card a:hover{
+transform:scale(1.05);
+}
+
+/* FOOTER */
+
+footer{
+text-align:center;
+padding:22px 10px;
+margin-top:20px;
+border-top:1px solid rgba(255,255,255,0.08);
+color:#94a3b8;
+font-size:14px;
+background:rgba(255,255,255,0.03);
+}
+
+/* MOBILE */
+
+@media(max-width:600px){
+
+header{
+padding:22px 12px;
+}
+
+header h1{
+font-size:28px;
+}
+
+.container{
+padding:16px;
+gap:16px;
+}
+
+.card{
+padding:20px;
+border-radius:20px;
+}
+
+.card h2{
+font-size:21px;
 }
 
 }
+
 </style>
 </head>
 <body>
 
 <header>
+
 <h1>Stories World</h1>
-<p>Choose Category</p>
+
+<div class="brand">
+By Yatharth
+</div>
+
+<p>
+Choose Your Favorite Category
+</p>
+
 </header>
 
 <div class="container" id="categoryBox"></div>
 
+<footer>
+© 2026 Stories World | Yatharth Tools
+</footer>
+
 <script src="stories.js"></script>
 
 <script>
-const categories = [...new Set(storiesData.map(s => s.category))];
+
+const categories = [...new Set(
+storiesData.map(s => s.category)
+)];
 
 const box = document.getElementById("categoryBox");
 
 categories.forEach(cat => {
-  box.innerHTML += `
-    <div class="card">
-      <h2>${cat}</h2>
-      <a href="stories-list.html?category=${cat}">
-        Open Category
-      </a>
-    </div>
-  `;
+
+box.innerHTML += `
+
+<div class="card">
+
+<h2>${cat}</h2>
+
+<p>
+Explore amazing ${cat} stories.
+</p>
+
+<a href="stories-list.html?category=${cat}">
+Open Category
+</a>
+
+</div>
+
+`;
+
 });
+
 </script>
 
 </body>
