@@ -22,7 +22,7 @@ const storiesData = [
   title: "Never Give Up",
   desc: "Motivation story jo tumhe success ke liye inspire karegi...",
   file: "stories/motivation1.txt"
-}
+},
 
 {
   id: 4,
