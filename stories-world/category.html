@@ -16,8 +16,7 @@ box-sizing:border-box;
 
 body{
 font-family:Arial,sans-serif;
-background:
-radial-gradient(circle at top,#1e293b 0%,#0f172a 45%,#020617 100%);
+background:linear-gradient(135deg,#050816,#091428,#0f172a);
 color:white;
 min-height:100vh;
 }
@@ -26,9 +25,9 @@ min-height:100vh;
 
 header{
 text-align:center;
-padding:28px 15px 24px;
-background:rgba(15,23,42,0.75);
-backdrop-filter:blur(14px);
+padding:28px 15px;
+background:rgba(255,255,255,0.05);
+backdrop-filter:blur(12px);
 border-bottom:1px solid rgba(255,255,255,0.08);
 position:sticky;
 top:0;
@@ -39,7 +38,7 @@ header h1{
 font-size:34px;
 font-weight:800;
 margin-bottom:4px;
-background:linear-gradient(to right,#38bdf8,#22d3ee,#4ade80);
+background:linear-gradient(to right,#ff00ff,#00f7ff,#00ff99);
 -webkit-background-clip:text;
 -webkit-text-fill-color:transparent;
 }
@@ -73,7 +72,7 @@ gap:22px;
 .card{
 position:relative;
 overflow:hidden;
-background:rgba(30,41,59,0.72);
+background:rgba(255,255,255,0.05);
 border:1px solid rgba(255,255,255,0.08);
 border-radius:24px;
 padding:24px;
@@ -88,21 +87,21 @@ top:-50px;
 right:-50px;
 width:120px;
 height:120px;
-background:rgba(56,189,248,0.15);
+background:rgba(0,247,255,0.12);
 border-radius:50%;
 filter:blur(10px);
 }
 
 .card:hover{
 transform:translateY(-6px);
-border-color:#38bdf8;
+border-color:#00f7ff;
 box-shadow:0 10px 25px rgba(0,0,0,0.35);
 }
 
 .card h2{
 font-size:24px;
 margin-bottom:12px;
-color:#f8fafc;
+color:#00f7ff;
 position:relative;
 z-index:1;
 }
@@ -122,8 +121,8 @@ display:inline-block;
 margin-top:18px;
 padding:11px 16px;
 border-radius:14px;
-background:linear-gradient(to right,#38bdf8,#22d3ee);
-color:#082f49;
+background:linear-gradient(to right,#00f7ff,#00ff99);
+color:#001018;
 text-decoration:none;
 font-size:14px;
 font-weight:700;
@@ -181,7 +180,6 @@ font-size:21px;
 <body>
 
 <header>
-
 <h1>Stories World</h1>
 
 <div class="brand">
@@ -191,7 +189,6 @@ By Yatharth
 <p>
 Choose Your Favorite Category
 </p>
-
 </header>
 
 <div class="container" id="categoryBox"></div>
@@ -213,21 +210,13 @@ const box = document.getElementById("categoryBox");
 categories.forEach(cat => {
 
 box.innerHTML += `
-
 <div class="card">
-
 <h2>${cat}</h2>
-
-<p>
-Explore amazing ${cat} stories.
-</p>
-
+<p>Explore amazing ${cat} stories.</p>
 <a href="stories-list.html?category=${cat}">
 Open Category
 </a>
-
 </div>
-
 `;
 
 });
