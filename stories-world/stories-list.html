@@ -80,6 +80,24 @@ font-weight:700;
 backdrop-filter:blur(10px);
 }
 
+.sort-btn{
+padding:13px 18px;
+border:none;
+border-radius:14px;
+background:rgba(255,255,255,0.05);
+border:1px solid rgba(255,255,255,0.08);
+color:#00f7ff;
+font-size:14px;
+font-weight:700;
+cursor:pointer;
+backdrop-filter:blur(10px);
+transition:0.3s;
+}
+
+.sort-btn:hover{
+transform:scale(1.05);
+}
+
 .top-bar input{
 flex:1;
 min-width:220px;
@@ -96,6 +114,46 @@ backdrop-filter:blur(10px);
 
 .top-bar input::placeholder{
 color:#94a3b8;
+}
+
+/* CONTINUE */
+
+.continue-box{
+max-width:950px;
+margin:15px auto 0;
+padding:0 20px;
+}
+
+.continue-card{
+display:none;
+background:rgba(255,255,255,0.05);
+border:1px solid rgba(255,255,255,0.08);
+border-radius:22px;
+padding:22px;
+backdrop-filter:blur(10px);
+}
+
+.continue-card h3{
+font-size:24px;
+margin-bottom:10px;
+color:#00f7ff;
+}
+
+.continue-card p{
+color:#cbd5e1;
+line-height:1.7;
+}
+
+.continue-card a{
+display:inline-block;
+margin-top:18px;
+padding:11px 16px;
+border-radius:12px;
+background:linear-gradient(to right,#00f7ff,#00ff99);
+color:#001018;
+text-decoration:none;
+font-size:14px;
+font-weight:700;
 }
 
 /* CONTAINER */
@@ -123,7 +181,7 @@ backdrop-filter:blur(10px);
 display:flex;
 flex-direction:column;
 justify-content:space-between;
-min-height:230px;
+min-height:250px;
 }
 
 .card::before{
@@ -152,6 +210,13 @@ border-color:rgba(0,247,255,0.5);
 box-shadow:0 8px 25px rgba(0,0,0,0.35);
 }
 
+.badge-wrap{
+display:flex;
+gap:10px;
+flex-wrap:wrap;
+margin-bottom:12px;
+}
+
 .badge{
 display:inline-block;
 padding:6px 12px;
@@ -160,9 +225,18 @@ background:rgba(0,247,255,0.12);
 color:#00f7ff;
 font-size:11px;
 font-weight:700;
-margin-bottom:12px;
 letter-spacing:1px;
 width:fit-content;
+}
+
+.new-badge{
+background:rgba(255,0,255,0.12);
+color:#ff7cf3;
+}
+
+.saved-badge{
+background:rgba(0,255,153,0.12);
+color:#00ff99;
 }
 
 .card h2{
@@ -171,6 +245,7 @@ margin-bottom:12px;
 color:#00f7ff;
 position:relative;
 z-index:1;
+line-height:1.4;
 }
 
 .card p{
@@ -181,7 +256,11 @@ position:relative;
 z-index:1;
 }
 
-/* BUTTON */
+.story-meta{
+margin-top:14px;
+font-size:13px;
+color:#94a3b8;
+}
 
 .card a{
 display:inline-block;
@@ -294,11 +373,37 @@ Stories
 0 Stories
 </div>
 
+<button class="sort-btn" id="sortBtn">
+Sort A-Z
+</button>
+
 <input
 type="text"
 id="searchInput"
 placeholder="Search stories..."
 >
+
+</div>
+
+<!-- CONTINUE -->
+
+<div class="continue-box">
+
+<div class="continue-card" id="continueCard">
+
+<h3>
+Continue Reading
+</h3>
+
+<p id="continueText">
+Resume your last story
+</p>
+
+<a id="continueBtn" href="#">
+Continue
+</a>
+
+</div>
 
 </div>
 
@@ -310,7 +415,7 @@ placeholder="Search stories..."
 
 <script>
 
-/* AUTO CATEGORY SYSTEM SAME */
+/* ORIGINAL AUTO SYSTEM SAME */
 
 const params = new URLSearchParams(location.search);
 
@@ -331,72 +436,45 @@ document.getElementById("storyCount")
 .innerText =
 filtered.length + " Stories";
 
-/* EMPTY */
+/* CONTINUE READING */
 
-if(filtered.length === 0){
+const savedStory =
+localStorage.getItem("bookmark_story");
 
-box.innerHTML = `
+if(savedStory){
 
-<div class="empty">
-No stories found in this category.
-</div>
+const foundStory =
+storiesData.find(
+s => s.id == savedStory
+);
 
-`;
+if(foundStory){
+
+document.getElementById(
+"continueCard"
+).style.display = "block";
+
+document.getElementById(
+"continueText"
+).innerText = foundStory.title;
+
+document.getElementById(
+"continueBtn"
+).href =
+
+"story.html?id=" + foundStory.id;
 
 }
 
-/* SHOW STORIES */
+}
 
-filtered.forEach(story => {
+/* RENDER STORIES */
 
-box.innerHTML += `
-
-<div class="card">
-
-<div class="badge">
-${story.category}
-</div>
-
-<h2>${story.title}</h2>
-
-<p>
-${story.desc}
-</p>
-
-<a href="story.html?id=${story.id}">
-Read Story
-</a>
-
-</div>
-
-`;
-
-});
-
-/* SEARCH */
-
-const searchInput =
-document.getElementById("searchInput");
-
-searchInput.addEventListener("input", () => {
-
-const value =
-searchInput.value.toLowerCase();
+function renderStories(data){
 
 box.innerHTML = "";
 
-const searchedStories =
-filtered.filter(story =>
-
-story.title.toLowerCase().includes(value)
-
-||
-
-story.desc.toLowerCase().includes(value)
-
-);
-
-if(searchedStories.length === 0){
+if(data.length === 0){
 
 box.innerHTML = `
 
@@ -410,14 +488,41 @@ return;
 
 }
 
-searchedStories.forEach(story => {
+data.forEach((story,index) => {
+
+const readingTime =
+Math.max(1,
+Math.ceil(
+(story.desc.length + story.title.length)
+/ 120
+)
+);
+
+const isSaved =
+savedStory == story.id;
 
 box.innerHTML += `
 
 <div class="card">
 
+<div class="badge-wrap">
+
 <div class="badge">
 ${story.category}
+</div>
+
+${index < 2 ? `
+<div class="badge new-badge">
+NEW
+</div>
+` : ""}
+
+${isSaved ? `
+<div class="badge saved-badge">
+BOOKMARKED
+</div>
+` : ""}
+
 </div>
 
 <h2>${story.title}</h2>
@@ -425,6 +530,10 @@ ${story.category}
 <p>
 ${story.desc}
 </p>
+
+<div class="story-meta">
+⏱ ${readingTime} min read
+</div>
 
 <a href="story.html?id=${story.id}">
 Read Story
@@ -436,7 +545,69 @@ Read Story
 
 });
 
+}
+
+renderStories(filtered);
+
+/* SEARCH */
+
+const searchInput =
+document.getElementById("searchInput");
+
+searchInput.addEventListener("input", () => {
+
+const value =
+searchInput.value.toLowerCase();
+
+const searchedStories =
+filtered.filter(story =>
+
+story.title.toLowerCase().includes(value)
+
+||
+
+story.desc.toLowerCase().includes(value)
+
+);
+
+renderStories(searchedStories);
+
 });
+
+/* SORT */
+
+let sorted = false;
+
+document.getElementById("sortBtn")
+.onclick = () => {
+
+sorted = !sorted;
+
+const cloned = [...filtered];
+
+if(sorted){
+
+cloned.sort((a,b) =>
+a.title.localeCompare(b.title)
+);
+
+document.getElementById("sortBtn")
+.innerText = "Original";
+
+}
+
+else{
+
+document.getElementById("sortBtn")
+.innerText = "Sort A-Z";
+
+}
+
+renderStories(
+sorted ? cloned : filtered
+);
+
+};
 
 </script>
 
