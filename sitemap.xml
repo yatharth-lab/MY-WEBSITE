@@ -7,6 +7,12 @@
     <priority>1.0</priority>
   </url>
 
+<url> 
+    <loc>https://yatharth-lab.github.io/stories-world/category.html</loc>
+    <priority>0.8</priority>
+  </url>
+
+  
   <url> 
     <loc>https://yatharth-lab.github.io/tools/next-toppers.html</loc>
     <priority>0.8</priority>
