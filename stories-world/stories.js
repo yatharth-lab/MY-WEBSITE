@@ -33,31 +33,3 @@ const storiesData = [
 }
 
 ];
-
-function generateKeywords(text) {
-    return text
-        .toLowerCase()
-        .replace(/[^a-zA-Z0-9\u0900-\u097F\s]/g, " ")
-        .split(/\s+/)
-        .filter(word => word.length > 2);
-}
-
-function buildSearchIndex(story) {
-
-    const baseText =
-        story.title + " " +
-        story.category + " " +
-        story.desc;
-
-    let keywords = generateKeywords(baseText);
-
-    keywords.push(story.category.toLowerCase());
-
-    keywords = [...new Set(keywords)];
-
-    return keywords.join(" ");
-}
-
-storiesData.forEach(story => {
-    story.search = buildSearchIndex(story);
-});
