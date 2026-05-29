@@ -23,8 +23,6 @@ href="https://yatharth-lab.github.io/">
 
 <style>
 
-/* OLD CSS SAME */
-
 *{
 margin:0;
 padding:0;
@@ -74,7 +72,7 @@ font-size:15px;
 color:#cbd5e1;
 }
 
-/* HERO SECTION */
+/* HERO */
 
 .hero{
 position:relative;
@@ -152,6 +150,7 @@ transform:scale(1.05);
 max-width:550px;
 margin:0 auto 40px;
 padding:0 20px;
+position:relative;
 }
 
 .search-box input{
@@ -169,6 +168,68 @@ border:1px solid rgba(255,255,255,0.08);
 
 .search-box input::placeholder{
 color:#94a3b8;
+}
+
+/* CONTINUE */
+
+.continueBox{
+max-width:1100px;
+margin:0 auto 35px;
+padding:0 20px;
+}
+
+.continueCard{
+display:none;
+background:rgba(255,255,255,0.05);
+border:1px solid rgba(255,255,255,0.08);
+border-radius:24px;
+padding:24px;
+backdrop-filter:blur(12px);
+}
+
+.continueCard h3{
+font-size:25px;
+margin-bottom:12px;
+color:#00f7ff;
+}
+
+.continueCard p{
+color:#cbd5e1;
+line-height:1.7;
+}
+
+.continueCard a{
+display:inline-block;
+margin-top:18px;
+padding:12px 18px;
+border-radius:14px;
+background:linear-gradient(to right,#00f7ff,#00ff99);
+color:#001018;
+text-decoration:none;
+font-weight:700;
+}
+
+/* RANDOM */
+
+.randomWrap{
+text-align:center;
+padding:0 20px 35px;
+}
+
+.randomBtn{
+padding:14px 24px;
+border:none;
+border-radius:18px;
+background:linear-gradient(to right,#ff00ff,#00f7ff);
+color:white;
+font-size:15px;
+font-weight:800;
+cursor:pointer;
+transition:0.3s;
+}
+
+.randomBtn:hover{
+transform:scale(1.05);
 }
 
 /* STATS */
@@ -208,7 +269,7 @@ color:#cbd5e1;
 font-size:14px;
 }
 
-/* SECTION TITLE */
+/* TITLE */
 
 .section-title{
 text-align:center;
@@ -283,8 +344,6 @@ color:#cbd5e1;
 position:relative;
 z-index:1;
 }
-
-/* BUTTON */
 
 .card a{
 display:inline-block;
@@ -416,17 +475,53 @@ placeholder="Search Stories..."
 
 </div>
 
+<!-- CONTINUE READING -->
+
+<div class="continueBox">
+
+<div class="continueCard" id="continueCard">
+
+<h3>
+Continue Reading
+</h3>
+
+<p id="continueText">
+Resume your last story
+</p>
+
+<a id="continueBtn" href="#">
+Continue
+</a>
+
+</div>
+
+</div>
+
+<!-- RANDOM -->
+
+<div class="randomWrap">
+
+<button class="randomBtn" id="randomBtn">
+Random Story
+</button>
+
+</div>
+
 <!-- STATS -->
 
 <section class="stats">
 
 <div class="stat-card">
-<h3>100+</h3>
+<h3 id="storyCount">
+0+
+</h3>
 <p>Stories</p>
 </div>
 
 <div class="stat-card">
-<h3>10+</h3>
+<h3 id="categoryCount">
+0+
+</h3>
 <p>Categories</p>
 </div>
 
@@ -445,21 +540,17 @@ Story Categories
 Choose your favorite category and start reading
 </p>
 
-<!-- CATEGORY BOX -->
-
 <div class="container" id="categoryBox"></div>
 
 <footer>
 © 2026 Stories World | Yatharth Tools
 </footer>
 
-<!-- OLD JS SAME -->
-
 <script src="stories.js"></script>
 
 <script>
 
-/* OLD JS */
+/* ORIGINAL AUTO SYSTEM SAME */
 
 const categories = [...new Set(
 storiesData.map(s => s.category)
@@ -467,10 +558,25 @@ storiesData.map(s => s.category)
 
 const box = document.getElementById("categoryBox");
 
+/* COUNTS */
+
+document.getElementById("storyCount")
+.innerText = storiesData.length + "+";
+
+document.getElementById("categoryCount")
+.innerText = categories.length + "+";
+
+/* SHOW CATEGORY */
+
+function showCategories(){
+
+box.innerHTML = "";
+
 categories.forEach(cat => {
 
 box.innerHTML += `
 <div class="card">
+
 <h2>${cat}</h2>
 
 <p>
@@ -485,6 +591,10 @@ Open Category
 `;
 
 });
+
+}
+
+showCategories();
 
 /* SEARCH */
 
@@ -500,24 +610,7 @@ box.innerHTML = "";
 
 if(value === ""){
 
-categories.forEach(cat => {
-
-box.innerHTML += `
-<div class="card">
-<h2>${cat}</h2>
-
-<p>
-Explore amazing ${cat} stories.
-</p>
-
-<a href="stories-list.html?category=${encodeURIComponent(cat)}">
-Open Category
-</a>
-
-</div>
-`;
-
-});
+showCategories();
 
 return;
 
@@ -529,7 +622,9 @@ const filteredStories =
 storiesData.filter(story =>
 
 story.title.toLowerCase().includes(value)
+
 ||
+
 story.category.toLowerCase().includes(value)
 
 );
@@ -558,7 +653,7 @@ box.innerHTML += `
 Category : ${story.category}
 </p>
 
-<a href="${story.link}">
+<a href="story.html?id=${story.id}">
 Read Story
 </a>
 
@@ -568,6 +663,56 @@ Read Story
 });
 
 });
+
+/* CONTINUE READING */
+
+const savedStory =
+localStorage.getItem("bookmark_story");
+
+if(savedStory){
+
+const foundStory =
+storiesData.find(
+s => s.id == savedStory
+);
+
+if(foundStory){
+
+document.getElementById(
+"continueCard"
+).style.display = "block";
+
+document.getElementById(
+"continueText"
+).innerText = foundStory.title;
+
+document.getElementById(
+"continueBtn"
+).href =
+
+"story.html?id=" + foundStory.id;
+
+}
+
+}
+
+/* RANDOM STORY */
+
+document.getElementById("randomBtn")
+.onclick = () => {
+
+const randomStory =
+
+storiesData[
+Math.floor(
+Math.random() * storiesData.length
+)
+];
+
+location.href =
+"story.html?id=" + randomStory.id;
+
+};
 
 </script>
 
