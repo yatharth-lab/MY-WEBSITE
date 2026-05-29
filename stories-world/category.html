@@ -529,6 +529,8 @@ const filteredStories =
 storiesData.filter(story =>
 
 story.title.toLowerCase().includes(value)
+||
+story.category.toLowerCase().includes(value)
 
 );
 
