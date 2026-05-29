@@ -666,12 +666,9 @@ const filteredStories =
 storiesData.filter(story =>
 
 story.title.toLowerCase().includes(value)
-
 ||
-
 story.category.toLowerCase().includes(value)
-||
-story.search.toLowerCase().includes(value)
+
 );
 
 if(filteredStories.length === 0){
