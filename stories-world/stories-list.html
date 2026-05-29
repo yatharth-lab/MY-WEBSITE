@@ -385,6 +385,27 @@ placeholder="Search stories..."
 
 </div>
 
+<!-- CONTINUE -->
+
+<div class="continue-box">
+
+<div class="continue-card" id="continueCard">
+
+<h3>
+Continue Reading
+</h3>
+
+<p id="continueText">
+Resume your last story
+</p>
+
+<a id="continueBtn" href="#">
+Continue
+</a>
+
+</div>
+
+</div>
 
 <!-- STORIES -->
 
@@ -415,6 +436,37 @@ document.getElementById("storyCount")
 .innerText =
 filtered.length + " Stories";
 
+/* CONTINUE READING */
+
+const savedStory =
+localStorage.getItem("bookmark_story");
+
+if(savedStory){
+
+const foundStory =
+storiesData.find(
+s => s.id == savedStory
+);
+
+if(foundStory){
+
+document.getElementById(
+"continueCard"
+).style.display = "block";
+
+document.getElementById(
+"continueText"
+).innerText = foundStory.title;
+
+document.getElementById(
+"continueBtn"
+).href =
+
+"story.html?id=" + foundStory.id;
+
+}
+
+}
 
 /* RENDER STORIES */
 
