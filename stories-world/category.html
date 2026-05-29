@@ -6,17 +6,24 @@
 
 <title>Stories World | By Yatharth</title>
 
-  <meta name="description"
+<meta name="description"
 content="YATHARTH Tools website , hindi Stories, Hindi Novels." />
 
 <meta name="keywords"
-content="Yatharth Tools, Hindi Stories, story world, stories " />
+content="Yatharth Tools, Hindi Stories, Hindi Novels, Stories World, Story Website" />
 
 <meta name="author" content="Yatharth Gupta" />
 
 <meta name="robots" content="index, follow" />
 
+<meta name="theme-color" content="#091428">
+
+<link rel="canonical"
+href="https://yatharth-lab.github.io/">
+
 <style>
+
+/* OLD CSS SAME */
 
 *{
 margin:0;
@@ -29,6 +36,7 @@ font-family:Arial,sans-serif;
 background:linear-gradient(135deg,#050816,#091428,#0f172a);
 color:white;
 min-height:100vh;
+overflow-x:hidden;
 }
 
 /* HEADER */
@@ -64,6 +72,158 @@ opacity:0.8;
 header p{
 font-size:15px;
 color:#cbd5e1;
+}
+
+/* HERO SECTION */
+
+.hero{
+position:relative;
+padding:80px 20px 60px;
+text-align:center;
+overflow:hidden;
+}
+
+.hero::before{
+content:"";
+position:absolute;
+width:500px;
+height:500px;
+background:#00f7ff22;
+filter:blur(100px);
+top:-200px;
+left:-150px;
+border-radius:50%;
+}
+
+.hero::after{
+content:"";
+position:absolute;
+width:400px;
+height:400px;
+background:#ff00ff18;
+filter:blur(100px);
+bottom:-200px;
+right:-100px;
+border-radius:50%;
+}
+
+.hero-content{
+position:relative;
+z-index:1;
+}
+
+.hero h2{
+font-size:52px;
+font-weight:900;
+margin-bottom:20px;
+line-height:1.2;
+background:linear-gradient(to right,#00f7ff,#00ff99,#ff00ff);
+-webkit-background-clip:text;
+-webkit-text-fill-color:transparent;
+}
+
+.hero p{
+max-width:760px;
+margin:auto;
+font-size:18px;
+line-height:1.8;
+color:#cbd5e1;
+}
+
+.hero-btn{
+display:inline-block;
+margin-top:28px;
+padding:14px 26px;
+border-radius:18px;
+background:linear-gradient(to right,#00f7ff,#00ff99);
+color:#001018;
+text-decoration:none;
+font-weight:800;
+transition:0.3s;
+}
+
+.hero-btn:hover{
+transform:scale(1.05);
+}
+
+/* SEARCH */
+
+.search-box{
+max-width:550px;
+margin:0 auto 40px;
+padding:0 20px;
+}
+
+.search-box input{
+width:100%;
+padding:16px;
+border:none;
+outline:none;
+border-radius:18px;
+background:rgba(255,255,255,0.06);
+backdrop-filter:blur(12px);
+color:white;
+font-size:15px;
+border:1px solid rgba(255,255,255,0.08);
+}
+
+.search-box input::placeholder{
+color:#94a3b8;
+}
+
+/* STATS */
+
+.stats{
+display:flex;
+justify-content:center;
+gap:20px;
+flex-wrap:wrap;
+padding:10px 20px 50px;
+}
+
+.stat-card{
+background:rgba(255,255,255,0.05);
+border:1px solid rgba(255,255,255,0.08);
+padding:24px;
+border-radius:24px;
+min-width:160px;
+text-align:center;
+backdrop-filter:blur(12px);
+transition:0.3s;
+}
+
+.stat-card:hover{
+transform:translateY(-5px);
+border-color:#00f7ff;
+}
+
+.stat-card h3{
+font-size:32px;
+margin-bottom:10px;
+color:#00f7ff;
+}
+
+.stat-card p{
+color:#cbd5e1;
+font-size:14px;
+}
+
+/* SECTION TITLE */
+
+.section-title{
+text-align:center;
+font-size:34px;
+margin-bottom:10px;
+font-weight:800;
+background:linear-gradient(to right,#00f7ff,#00ff99);
+-webkit-background-clip:text;
+-webkit-text-fill-color:transparent;
+}
+
+.section-sub{
+text-align:center;
+color:#94a3b8;
+margin-bottom:30px;
 }
 
 /* CONTAINER */
@@ -150,7 +310,7 @@ transform:scale(1.05);
 footer{
 text-align:center;
 padding:22px 10px;
-margin-top:20px;
+margin-top:40px;
 border-top:1px solid rgba(255,255,255,0.08);
 color:#94a3b8;
 font-size:14px;
@@ -169,6 +329,18 @@ header h1{
 font-size:28px;
 }
 
+.hero{
+padding:60px 15px 45px;
+}
+
+.hero h2{
+font-size:36px;
+}
+
+.hero p{
+font-size:15px;
+}
+
 .container{
 padding:16px;
 gap:16px;
@@ -183,13 +355,19 @@ border-radius:20px;
 font-size:21px;
 }
 
+.section-title{
+font-size:28px;
+}
+
 }
 
 </style>
 </head>
+
 <body>
 
 <header>
+
 <h1>Stories World</h1>
 
 <div class="brand">
@@ -199,7 +377,75 @@ By Yatharth
 <p>
 Choose Your Favorite Category
 </p>
+
 </header>
+
+<!-- HERO -->
+
+<section class="hero">
+
+<div class="hero-content">
+
+<h2>
+Enter The Magical World Of Stories
+</h2>
+
+<p>
+Read amazing Hindi Stories, Horror Tales,
+Emotional Stories, Mystery, Novels and much more
+only on Stories World.
+</p>
+
+<a href="#categoryBox" class="hero-btn">
+Explore Now
+</a>
+
+</div>
+
+</section>
+
+<!-- SEARCH -->
+
+<div class="search-box">
+
+<input
+type="text"
+id="searchInput"
+placeholder="Search Categories..."
+>
+
+</div>
+
+<!-- STATS -->
+
+<section class="stats">
+
+<div class="stat-card">
+<h3>100+</h3>
+<p>Stories</p>
+</div>
+
+<div class="stat-card">
+<h3>10+</h3>
+<p>Categories</p>
+</div>
+
+<div class="stat-card">
+<h3>Daily</h3>
+<p>Updates</p>
+</div>
+
+</section>
+
+<h2 class="section-title">
+Story Categories
+</h2>
+
+<p class="section-sub">
+Choose your favorite category and start reading
+</p>
+
+<!-- CATEGORY BOX -->
 
 <div class="container" id="categoryBox"></div>
 
@@ -207,9 +453,13 @@ Choose Your Favorite Category
 © 2026 Stories World | Yatharth Tools
 </footer>
 
+<!-- OLD JS SAME -->
+
 <script src="stories.js"></script>
 
 <script>
+
+/* OLD JS */
 
 const categories = [...new Set(
 storiesData.map(s => s.category)
@@ -222,12 +472,42 @@ categories.forEach(cat => {
 box.innerHTML += `
 <div class="card">
 <h2>${cat}</h2>
-<p>Explore amazing ${cat} stories.</p>
-<a href="stories-list.html?category=${cat}">
+
+<p>
+Explore amazing ${cat} stories.
+</p>
+
+<a href="stories-list.html?category=${encodeURIComponent(cat)}">
 Open Category
 </a>
+
 </div>
 `;
+
+});
+
+/* SEARCH */
+
+const searchInput =
+document.getElementById("searchInput");
+
+searchInput.addEventListener("input", () => {
+
+const value =
+searchInput.value.toLowerCase();
+
+document.querySelectorAll(".card")
+.forEach(card => {
+
+const text =
+card.innerText.toLowerCase();
+
+card.style.display =
+text.includes(value)
+? "block"
+: "none";
+
+});
 
 });
 
