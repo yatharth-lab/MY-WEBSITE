@@ -494,18 +494,74 @@ document.getElementById("searchInput");
 searchInput.addEventListener("input", () => {
 
 const value =
-searchInput.value.toLowerCase();
+searchInput.value.toLowerCase().trim();
 
-document.querySelectorAll(".card")
-.forEach(card => {
+box.innerHTML = "";
 
-const text =
-card.innerText.toLowerCase();
+if(value === ""){
 
-card.style.display =
-text.includes(value)
-? "block"
-: "none";
+categories.forEach(cat => {
+
+box.innerHTML += `
+<div class="card">
+<h2>${cat}</h2>
+
+<p>
+Explore amazing ${cat} stories.
+</p>
+
+<a href="stories-list.html?category=${encodeURIComponent(cat)}">
+Open Category
+</a>
+
+</div>
+`;
+
+});
+
+return;
+
+}
+
+/* STORY SEARCH */
+
+const filteredStories =
+storiesData.filter(story =>
+
+story.title.toLowerCase().includes(value)
+
+);
+
+if(filteredStories.length === 0){
+
+box.innerHTML = `
+<div class="card">
+<h2>No Story Found</h2>
+<p>Try another keyword.</p>
+</div>
+`;
+
+return;
+
+}
+
+filteredStories.forEach(story => {
+
+box.innerHTML += `
+<div class="card">
+
+<h2>${story.title}</h2>
+
+<p>
+Category : ${story.category}
+</p>
+
+<a href="${story.link}">
+Read Story
+</a>
+
+</div>
+`;
 
 });
 
