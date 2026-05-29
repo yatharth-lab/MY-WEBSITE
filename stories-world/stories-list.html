@@ -7,79 +7,407 @@
 <title>Stories List | Stories World</title>
 
 <style>
-body{
+
+*{
 margin:0;
-font-family:Arial;
-background:#050816;
-color:white;
+padding:0;
+box-sizing:border-box;
 }
+
+body{
+font-family:Arial,sans-serif;
+background:linear-gradient(135deg,#050816,#091428,#0f172a);
+color:white;
+min-height:100vh;
+overflow-x:hidden;
+}
+
+/* HEADER */
 
 header{
 text-align:center;
-padding:20px;
+padding:24px 14px;
 background:rgba(255,255,255,0.05);
+backdrop-filter:blur(12px);
+border-bottom:1px solid rgba(255,255,255,0.08);
 position:sticky;
 top:0;
+z-index:100;
 }
 
+header h1{
+font-size:32px;
+font-weight:800;
+margin-bottom:5px;
+background:linear-gradient(to right,#ff00ff,#00f7ff,#00ff99);
+-webkit-background-clip:text;
+-webkit-text-fill-color:transparent;
+}
+
+.brand{
+font-size:11px;
+color:#94a3b8;
+margin-bottom:8px;
+letter-spacing:2px;
+opacity:0.8;
+}
+
+header p{
+font-size:15px;
+color:#cbd5e1;
+}
+
+/* TOP BAR */
+
+.top-bar{
+max-width:950px;
+margin:22px auto 10px;
+padding:0 20px;
+display:flex;
+gap:14px;
+align-items:center;
+flex-wrap:wrap;
+}
+
+.story-count{
+padding:12px 18px;
+border-radius:14px;
+background:rgba(255,255,255,0.05);
+border:1px solid rgba(255,255,255,0.08);
+color:#00f7ff;
+font-size:14px;
+font-weight:700;
+backdrop-filter:blur(10px);
+}
+
+.sort-btn{
+padding:13px 18px;
+border:none;
+border-radius:14px;
+background:rgba(255,255,255,0.05);
+border:1px solid rgba(255,255,255,0.08);
+color:#00f7ff;
+font-size:14px;
+font-weight:700;
+cursor:pointer;
+backdrop-filter:blur(10px);
+transition:0.3s;
+}
+
+.sort-btn:hover{
+transform:scale(1.05);
+}
+
+.top-bar input{
+flex:1;
+min-width:220px;
+padding:14px 16px;
+border:none;
+outline:none;
+border-radius:16px;
+background:rgba(255,255,255,0.05);
+border:1px solid rgba(255,255,255,0.08);
+color:white;
+font-size:14px;
+backdrop-filter:blur(10px);
+}
+
+.top-bar input::placeholder{
+color:#94a3b8;
+}
+
+/* CONTINUE */
+
+.continue-box{
+max-width:950px;
+margin:15px auto 0;
+padding:0 20px;
+}
+
+.continue-card{
+display:none;
+background:rgba(255,255,255,0.05);
+border:1px solid rgba(255,255,255,0.08);
+border-radius:22px;
+padding:22px;
+backdrop-filter:blur(10px);
+}
+
+.continue-card h3{
+font-size:24px;
+margin-bottom:10px;
+color:#00f7ff;
+}
+
+.continue-card p{
+color:#cbd5e1;
+line-height:1.7;
+}
+
+.continue-card a{
+display:inline-block;
+margin-top:18px;
+padding:11px 16px;
+border-radius:12px;
+background:linear-gradient(to right,#00f7ff,#00ff99);
+color:#001018;
+text-decoration:none;
+font-size:14px;
+font-weight:700;
+}
+
+/* CONTAINER */
+
 .container{
-max-width:900px;
+max-width:950px;
 margin:auto;
 padding:20px;
 display:grid;
-gap:15px;
+grid-template-columns:1fr;
+gap:18px;
 }
+
+/* CARD */
 
 .card{
-background:rgba(255,255,255,0.06);
-padding:16px;
-border-radius:15px;
+position:relative;
+overflow:hidden;
+background:rgba(255,255,255,0.05);
 border:1px solid rgba(255,255,255,0.08);
+border-radius:22px;
+padding:22px;
+transition:0.3s;
+backdrop-filter:blur(10px);
+display:flex;
+flex-direction:column;
+justify-content:space-between;
+min-height:250px;
 }
 
-.card h2{
-color:#00f7ff;
-margin:0 0 10px;
+.card::before{
+content:"";
+position:absolute;
+top:-40px;
+right:-40px;
+width:100px;
+height:100px;
+background:rgba(0,247,255,0.08);
+border-radius:50%;
+}
+
+.card::after{
+content:"📖";
+position:absolute;
+bottom:-8px;
+right:12px;
+font-size:70px;
+opacity:0.05;
+}
+
+.card:hover{
+transform:translateY(-5px);
+border-color:rgba(0,247,255,0.5);
+box-shadow:0 8px 25px rgba(0,0,0,0.35);
+}
+
+.badge-wrap{
+display:flex;
+gap:10px;
+flex-wrap:wrap;
+margin-bottom:12px;
 }
 
 .badge{
 display:inline-block;
-padding:4px 10px;
-border-radius:20px;
-font-size:12px;
-background:#00f7ff22;
+padding:6px 12px;
+border-radius:999px;
+background:rgba(0,247,255,0.12);
 color:#00f7ff;
-margin-bottom:8px;
+font-size:11px;
+font-weight:700;
+letter-spacing:1px;
+width:fit-content;
 }
 
-a{
+.new-badge{
+background:rgba(255,0,255,0.12);
+color:#ff7cf3;
+}
+
+.saved-badge{
+background:rgba(0,255,153,0.12);
+color:#00ff99;
+}
+
+.card h2{
+font-size:24px;
+margin-bottom:12px;
+color:#00f7ff;
+position:relative;
+z-index:1;
+line-height:1.4;
+}
+
+.card p{
+font-size:15px;
+line-height:1.8;
+color:#cbd5e1;
+position:relative;
+z-index:1;
+}
+
+.story-meta{
+margin-top:14px;
+font-size:13px;
+color:#94a3b8;
+}
+
+.card a{
 display:inline-block;
-margin-top:10px;
-padding:10px 14px;
-border-radius:10px;
+margin-top:18px;
+padding:11px 16px;
+border-radius:12px;
 background:linear-gradient(to right,#00f7ff,#00ff99);
-color:black;
+color:#001018;
 text-decoration:none;
-font-weight:bold;
+font-size:14px;
+font-weight:700;
+transition:0.25s;
+position:relative;
+z-index:1;
+width:fit-content;
 }
 
-input{
-width:90%;
-padding:10px;
-margin-top:10px;
-border-radius:10px;
-border:none;
+.card a:hover{
+transform:scale(1.05);
 }
+
+.card a::after{
+content:" →";
+}
+
+/* EMPTY */
+
+.empty{
+text-align:center;
+padding:40px 20px;
+color:#94a3b8;
+font-size:16px;
+}
+
+/* MOBILE */
+
+@media(max-width:600px){
+
+header{
+padding:20px 12px;
+}
+
+header h1{
+font-size:27px;
+}
+
+.container{
+padding:16px;
+gap:16px;
+}
+
+.card{
+padding:18px;
+border-radius:18px;
+min-height:auto;
+}
+
+.card h2{
+font-size:21px;
+}
+
+.card p{
+font-size:14px;
+}
+
+.top-bar{
+padding:0 16px;
+}
+
+.top-bar input{
+width:100%;
+}
+
+}
+
+/* DESKTOP */
+
+@media(min-width:800px){
+
+.container{
+grid-template-columns:repeat(2,1fr);
+}
+
+}
+
 </style>
 </head>
 
 <body>
 
 <header>
-<h2 id="catTitle">Stories</h2>
-<div id="storyCount">0 Stories</div>
-<input id="searchInput" placeholder="Search stories...">
+
+<h1>Stories World</h1>
+
+<div class="brand">
+By Yatharth
+</div>
+
+<p id="catTitle">
+Stories
+</p>
+
 </header>
+
+<!-- TOP BAR -->
+
+<div class="top-bar">
+
+<div class="story-count" id="storyCount">
+0 Stories
+</div>
+
+<button class="sort-btn" id="sortBtn">
+Sort A-Z
+</button>
+
+<input
+type="text"
+id="searchInput"
+placeholder="Search stories..."
+>
+
+</div>
+
+<!-- CONTINUE -->
+
+<div class="continue-box">
+
+<div class="continue-card" id="continueCard">
+
+<h3>
+Continue Reading
+</h3>
+
+<p id="continueText">
+Resume your last story
+</p>
+
+<a id="continueBtn" href="#">
+Continue
+</a>
+
+</div>
+
+</div>
+
+<!-- STORIES -->
 
 <div class="container" id="storiesBox"></div>
 
@@ -87,77 +415,199 @@ border:none;
 
 <script>
 
-// ✅ STEP 1: SAFE DATA CHECK
-if(!window.storiesData){
-alert("stories.js load nahi ho raha");
-}
+/* ORIGINAL AUTO SYSTEM SAME */
 
-// ✅ STEP 2: SAFE CATEGORY (IMPORTANT FIX)
 const params = new URLSearchParams(location.search);
-const category = (params.get("category") || "").toLowerCase();
 
-// ✅ STEP 3: SAFE FILTER (NO CRASH)
-let filtered = storiesData || [];
+const category = params.get("category");
 
-if(category){
-filtered = filtered.filter(s =>
-(s.category || "").toLowerCase() === category
-);
-}
-
-// title set
 document.getElementById("catTitle").innerText =
-category ? category.toUpperCase() + " STORIES" : "ALL STORIES";
+category + " Stories";
 
-// count
-document.getElementById("storyCount").innerText =
-filtered.length + " Stories";
+const filtered = storiesData.filter(s =>
+s.category.toLowerCase() === category.toLowerCase()
+);
 
 const box = document.getElementById("storiesBox");
 
-// ✅ STEP 4: RENDER FUNCTION
-function render(list){
+/* STORY COUNT */
+
+document.getElementById("storyCount")
+.innerText =
+filtered.length + " Stories";
+
+/* CONTINUE READING */
+
+const savedStory =
+localStorage.getItem("bookmark_story");
+
+if(savedStory){
+
+const foundStory =
+storiesData.find(
+s => s.id == savedStory
+);
+
+if(foundStory){
+
+document.getElementById(
+"continueCard"
+).style.display = "block";
+
+document.getElementById(
+"continueText"
+).innerText = foundStory.title;
+
+document.getElementById(
+"continueBtn"
+).href =
+
+"story.html?id=" + foundStory.id;
+
+}
+
+}
+
+/* RENDER STORIES */
+
+function renderStories(data){
 
 box.innerHTML = "";
 
-if(list.length === 0){
-box.innerHTML = "<p style='text-align:center'>No stories found</p>";
-return;
-}
+if(data.length === 0){
 
-list.forEach(s => {
+box.innerHTML = `
 
-box.innerHTML += `
-<div class="card">
-
-<div class="badge">${s.category || "General"}</div>
-
-<h2>${s.title}</h2>
-
-<p>${s.desc}</p>
-
-<a href="story.html?id=${s.id}">Read Story</a>
-
+<div class="empty">
+No matching stories found.
 </div>
+
 `;
-});
+
+return;
 
 }
 
-render(filtered);
+data.forEach((story,index) => {
 
-// ✅ STEP 5: SEARCH (SAFE)
-document.getElementById("searchInput").addEventListener("input",(e)=>{
-
-const val = e.target.value.toLowerCase();
-
-const result = filtered.filter(s =>
-(s.title || "").toLowerCase().includes(val) ||
-(s.desc || "").toLowerCase().includes(val)
+const readingTime =
+Math.max(1,
+Math.ceil(
+(story.desc.length + story.title.length)
+/ 120
+)
 );
 
-render(result);
+const isSaved =
+savedStory == story.id;
+
+box.innerHTML += `
+
+<div class="card">
+
+<div class="badge-wrap">
+
+<div class="badge">
+${story.category}
+</div>
+
+${index < 2 ? `
+<div class="badge new-badge">
+NEW
+</div>
+` : ""}
+
+${isSaved ? `
+<div class="badge saved-badge">
+BOOKMARKED
+</div>
+` : ""}
+
+</div>
+
+<h2>${story.title}</h2>
+
+<p>
+${story.desc}
+</p>
+
+<div class="story-meta">
+⏱ ${readingTime} min read
+</div>
+
+<a href="story.html?id=${story.id}">
+Read Story
+</a>
+
+</div>
+
+`;
+
 });
+
+}
+
+renderStories(filtered);
+
+/* SEARCH */
+
+const searchInput =
+document.getElementById("searchInput");
+
+searchInput.addEventListener("input", () => {
+
+const value =
+searchInput.value.toLowerCase();
+
+const searchedStories =
+filtered.filter(story =>
+
+story.title.toLowerCase().includes(value)
+
+||
+
+story.desc.toLowerCase().includes(value)
+
+);
+
+renderStories(searchedStories);
+
+});
+
+/* SORT */
+
+let sorted = false;
+
+document.getElementById("sortBtn")
+.onclick = () => {
+
+sorted = !sorted;
+
+const cloned = [...filtered];
+
+if(sorted){
+
+cloned.sort((a,b) =>
+a.title.localeCompare(b.title)
+);
+
+document.getElementById("sortBtn")
+.innerText = "Original";
+
+}
+
+else{
+
+document.getElementById("sortBtn")
+.innerText = "Sort A-Z";
+
+}
+
+renderStories(
+sorted ? cloned : filtered
+);
+
+};
 
 </script>
 
