@@ -19,6 +19,7 @@ font-family:Arial,sans-serif;
 background:linear-gradient(135deg,#050816,#091428,#0f172a);
 color:white;
 min-height:100vh;
+overflow-x:hidden;
 }
 
 /* HEADER */
@@ -56,6 +57,47 @@ font-size:15px;
 color:#cbd5e1;
 }
 
+/* TOP BAR */
+
+.top-bar{
+max-width:950px;
+margin:22px auto 10px;
+padding:0 20px;
+display:flex;
+gap:14px;
+align-items:center;
+flex-wrap:wrap;
+}
+
+.story-count{
+padding:12px 18px;
+border-radius:14px;
+background:rgba(255,255,255,0.05);
+border:1px solid rgba(255,255,255,0.08);
+color:#00f7ff;
+font-size:14px;
+font-weight:700;
+backdrop-filter:blur(10px);
+}
+
+.top-bar input{
+flex:1;
+min-width:220px;
+padding:14px 16px;
+border:none;
+outline:none;
+border-radius:16px;
+background:rgba(255,255,255,0.05);
+border:1px solid rgba(255,255,255,0.08);
+color:white;
+font-size:14px;
+backdrop-filter:blur(10px);
+}
+
+.top-bar input::placeholder{
+color:#94a3b8;
+}
+
 /* CONTAINER */
 
 .container{
@@ -78,6 +120,10 @@ border-radius:22px;
 padding:22px;
 transition:0.3s;
 backdrop-filter:blur(10px);
+display:flex;
+flex-direction:column;
+justify-content:space-between;
+min-height:230px;
 }
 
 .card::before{
@@ -91,10 +137,32 @@ background:rgba(0,247,255,0.08);
 border-radius:50%;
 }
 
+.card::after{
+content:"📖";
+position:absolute;
+bottom:-8px;
+right:12px;
+font-size:70px;
+opacity:0.05;
+}
+
 .card:hover{
 transform:translateY(-5px);
 border-color:rgba(0,247,255,0.5);
 box-shadow:0 8px 25px rgba(0,0,0,0.35);
+}
+
+.badge{
+display:inline-block;
+padding:6px 12px;
+border-radius:999px;
+background:rgba(0,247,255,0.12);
+color:#00f7ff;
+font-size:11px;
+font-weight:700;
+margin-bottom:12px;
+letter-spacing:1px;
+width:fit-content;
 }
 
 .card h2{
@@ -128,10 +196,15 @@ font-weight:700;
 transition:0.25s;
 position:relative;
 z-index:1;
+width:fit-content;
 }
 
 .card a:hover{
 transform:scale(1.05);
+}
+
+.card a::after{
+content:" →";
 }
 
 /* EMPTY */
@@ -163,6 +236,7 @@ gap:16px;
 .card{
 padding:18px;
 border-radius:18px;
+min-height:auto;
 }
 
 .card h2{
@@ -171,6 +245,14 @@ font-size:21px;
 
 .card p{
 font-size:14px;
+}
+
+.top-bar{
+padding:0 16px;
+}
+
+.top-bar input{
+width:100%;
 }
 
 }
@@ -187,6 +269,7 @@ grid-template-columns:repeat(2,1fr);
 
 </style>
 </head>
+
 <body>
 
 <header>
@@ -203,11 +286,31 @@ Stories
 
 </header>
 
+<!-- TOP BAR -->
+
+<div class="top-bar">
+
+<div class="story-count" id="storyCount">
+0 Stories
+</div>
+
+<input
+type="text"
+id="searchInput"
+placeholder="Search stories..."
+>
+
+</div>
+
+<!-- STORIES -->
+
 <div class="container" id="storiesBox"></div>
 
 <script src="stories.js"></script>
 
 <script>
+
+/* AUTO CATEGORY SYSTEM SAME */
 
 const params = new URLSearchParams(location.search);
 
@@ -222,6 +325,14 @@ s.category.toLowerCase() === category.toLowerCase()
 
 const box = document.getElementById("storiesBox");
 
+/* STORY COUNT */
+
+document.getElementById("storyCount")
+.innerText =
+filtered.length + " Stories";
+
+/* EMPTY */
+
 if(filtered.length === 0){
 
 box.innerHTML = `
@@ -234,11 +345,17 @@ No stories found in this category.
 
 }
 
+/* SHOW STORIES */
+
 filtered.forEach(story => {
 
 box.innerHTML += `
 
 <div class="card">
+
+<div class="badge">
+${story.category}
+</div>
 
 <h2>${story.title}</h2>
 
@@ -253,6 +370,71 @@ Read Story
 </div>
 
 `;
+
+});
+
+/* SEARCH */
+
+const searchInput =
+document.getElementById("searchInput");
+
+searchInput.addEventListener("input", () => {
+
+const value =
+searchInput.value.toLowerCase();
+
+box.innerHTML = "";
+
+const searchedStories =
+filtered.filter(story =>
+
+story.title.toLowerCase().includes(value)
+
+||
+
+story.desc.toLowerCase().includes(value)
+
+);
+
+if(searchedStories.length === 0){
+
+box.innerHTML = `
+
+<div class="empty">
+No matching stories found.
+</div>
+
+`;
+
+return;
+
+}
+
+searchedStories.forEach(story => {
+
+box.innerHTML += `
+
+<div class="card">
+
+<div class="badge">
+${story.category}
+</div>
+
+<h2>${story.title}</h2>
+
+<p>
+${story.desc}
+</p>
+
+<a href="story.html?id=${story.id}">
+Read Story
+</a>
+
+</div>
+
+`;
+
+});
 
 });
 
