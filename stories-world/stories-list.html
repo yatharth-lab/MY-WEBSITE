@@ -116,45 +116,6 @@ backdrop-filter:blur(10px);
 color:#94a3b8;
 }
 
-/* CONTINUE */
-
-.continue-box{
-max-width:950px;
-margin:15px auto 0;
-padding:0 20px;
-}
-
-.continue-card{
-display:none;
-background:rgba(255,255,255,0.05);
-border:1px solid rgba(255,255,255,0.08);
-border-radius:22px;
-padding:22px;
-backdrop-filter:blur(10px);
-}
-
-.continue-card h3{
-font-size:24px;
-margin-bottom:10px;
-color:#00f7ff;
-}
-
-.continue-card p{
-color:#cbd5e1;
-line-height:1.7;
-}
-
-.continue-card a{
-display:inline-block;
-margin-top:18px;
-padding:11px 16px;
-border-radius:12px;
-background:linear-gradient(to right,#00f7ff,#00ff99);
-color:#001018;
-text-decoration:none;
-font-size:14px;
-font-weight:700;
-}
 
 /* CONTAINER */
 
@@ -385,27 +346,6 @@ placeholder="Search stories..."
 
 </div>
 
-<!-- CONTINUE -->
-
-<div class="continue-box">
-
-<div class="continue-card" id="continueCard">
-
-<h3>
-Continue Reading
-</h3>
-
-<p id="continueText">
-Resume your last story
-</p>
-
-<a id="continueBtn" href="#">
-Continue
-</a>
-
-</div>
-
-</div>
 
 <!-- STORIES -->
 
@@ -441,32 +381,7 @@ filtered.length + " Stories";
 const savedStory =
 localStorage.getItem("bookmark_story");
 
-if(savedStory){
 
-const foundStory =
-storiesData.find(
-s => s.id == savedStory
-);
-
-if(foundStory){
-
-document.getElementById(
-"continueCard"
-).style.display = "block";
-
-document.getElementById(
-"continueText"
-).innerText = foundStory.title;
-
-document.getElementById(
-"continueBtn"
-).href =
-
-"story.html?id=" + foundStory.id;
-
-}
-
-}
 
 /* RENDER STORIES */
 
